@@ -3,235 +3,371 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
-<title>77 XIT FF 7.0</title>
+<title>77 XIT FF 8.0</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#050505;color:white;font-family:Arial,sans-serif}
-button,select{cursor:pointer;font-weight:bold}
-#intro{
- position:fixed;inset:0;z-index:10;display:flex;align-items:center;
- justify-content:center;text-align:center;overflow:hidden;
- background:radial-gradient(ellipse at center,#350000 0%,#100000 40%,#020202 100%);
-}
-#intro:before,#intro:after{
- content:"";position:absolute;width:350px;height:350px;border:1px solid #ff2525;
- border-radius:50%;animation:pulse 4s infinite;box-shadow:0 0 40px #ff1717;
-}
+button,input,select{font:inherit}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:linear-gradient(100deg,#850000,#f22);color:white;font-weight:bold;margin-top:10px;cursor:pointer}
+.secondary{background:#292929}
+input,select{width:100%;padding:14px;background:#202020;color:white;border:1px solid #444;border-radius:9px;margin:7px 0}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
+.panel{width:100%;max-width:460px;background:#111;border:1px solid #662020;border-radius:17px;padding:23px;box-shadow:0 0 35px #70000055}
+.logo{text-align:center;font-size:50px;font-weight:1000;letter-spacing:5px;color:#ff3030;text-shadow:0 0 15px red,0 0 35px #a00}
+.sub{text-align:center;color:#999;font-size:10px;letter-spacing:4px;margin:8px 0 25px}
+#intro{position:fixed;inset:0;z-index:20;background:radial-gradient(ellipse,#400000,#100000 45%,#020202);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#intro:before,#intro:after{content:"";position:absolute;width:300px;height:300px;border:1px solid #f33;border-radius:50%;box-shadow:0 0 50px red;animation:pulse 4s infinite}
 #intro:after{width:500px;height:500px;animation-delay:1s;opacity:.3}
 @keyframes pulse{0%{transform:scale(.5);opacity:0}50%{opacity:.5}100%{transform:scale(1.5);opacity:0}}
-.particles{position:absolute;inset:0;background-image:
- radial-gradient(#ff3333 1px,transparent 1px);
- background-size:37px 37px;opacity:.25;animation:move 12s linear infinite}
+.particles{position:absolute;inset:0;background-image:radial-gradient(#ff3333 1px,transparent 1px);background-size:35px 35px;opacity:.3;animation:move 12s linear infinite}
 @keyframes move{to{background-position:100px -150px}}
-.intro-content{position:relative;z-index:2;padding:20px;animation:appear 2s ease}
+.introContent{position:relative;z-index:2;padding:20px;animation:appear 2s ease}
 @keyframes appear{from{opacity:0;transform:scale(.7);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
-.logo-big{font-size:clamp(65px,18vw,110px);font-weight:1000;letter-spacing:5px;
- color:white;text-shadow:0 0 12px red,0 0 35px #f00,0 0 75px #a00}
-.logo-big span{color:#ff2929}
-.subtitle{letter-spacing:6px;color:#ff7777;font-size:12px;margin:5px}
-.enter{
- margin-top:45px;padding:17px 35px;border:1px solid #ff4545;border-radius:7px;
- background:linear-gradient(100deg,#750000,#fa1717,#750000);
- color:white;font-size:15px;letter-spacing:2px;
- box-shadow:0 0 25px #ff1717;animation:glow 2s infinite
-}
-@keyframes glow{50%{box-shadow:0 0 45px #ff1717,0 0 70px #a00}}
-#intro.hide{animation:exit 1s forwards}
-@keyframes exit{to{opacity:0;visibility:hidden;transform:scale(1.3)}}
-header{text-align:center;padding:23px;background:linear-gradient(120deg,#250000,#080808);border-bottom:1px solid #8e1111}
-.logo{font-size:32px;font-weight:1000;color:#ff3030;letter-spacing:4px}
-header p{font-size:10px;color:#aaa;letter-spacing:3px}
+#intro.hide{animation:exit .9s forwards}
+@keyframes exit{to{opacity:0;visibility:hidden;transform:scale(1.2)}}
+.enter{margin-top:40px;letter-spacing:2px;box-shadow:0 0 25px red}
+h2{font-size:17px;color:#ff4545;margin:0 0 15px}
+.small{text-align:center;color:#999;font-size:12px;line-height:1.5}
+#auth,#app{display:none}
+header{text-align:center;padding:20px;background:linear-gradient(120deg,#280000,#080808);border-bottom:1px solid #8e1111}
+header .logo{font-size:32px}
 main{max-width:600px;margin:auto;padding:15px}
 .card{background:#141414;border:1px solid #333;border-radius:13px;padding:17px;margin-bottom:14px}
-h2{font-size:16px;color:#ff4444;margin:0 0 14px}
-button,select{width:100%;padding:13px;border:0;border-radius:8px;background:#df2020;color:white;margin-top:9px}
-.secondary{background:#292929}
 .stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:15px 0 6px}
 .value{color:#ff4545}
-input[type=range]{width:100%;accent-color:red}
+input[type=range]{padding:0;accent-color:red}
 .result{text-align:center;font-size:27px;color:#ff4040;font-weight:bold;padding:12px}
 #targetArea{height:180px;position:relative;background:#080808;border-radius:9px;overflow:hidden}
 footer{text-align:center;color:#666;font-size:11px;padding:20px}
-.hidden{display:none}
 </style>
 </head>
 <body>
 
 <div id="intro">
  <div class="particles"></div>
- <div class="intro-content">
-  <div class="logo-big"><span>77</span> XIT</div>
-  <div class="subtitle">FREE FIRE EXPERIENCE</div>
-  <p style="color:#aaa;font-size:11px;letter-spacing:3px;margin-top:20px">PREPARE-SE PARA JOGAR</p>
-  <button class="enter" onclick="enterPanel()">▶ ENTRAR NO PAINEL</button>
-  <p style="font-size:10px;color:#777;margin-top:25px">77 XIT FF • VERSION 7.0</p>
+ <div class="introContent">
+  <div class="logo">77 XIT</div>
+  <div class="sub">FREE FIRE EXPERIENCE</div>
+  <p class="small">PREPARE-SE PARA JOGAR</p>
+  <button class="enter" onclick="enterSite()">▶ ENTRAR NO PAINEL</button>
+  <p class="small">VERSION 8.0</p>
  </div>
 </div>
 
+<section id="auth" class="screen">
+ <div class="panel">
+  <div class="logo">77 XIT</div>
+  <div class="sub">ÁREA DE ACESSO</div>
+
+  <div id="loginBox">
+   <h2>🔐 ENTRAR NA CONTA</h2>
+   <input id="loginUser" placeholder="Nome de usuário" maxlength="24">
+   <input id="loginPass" type="password" placeholder="Sua senha">
+   <button onclick="login()">ENTRAR</button>
+   <button class="secondary" onclick="showRegister()">CRIAR CONTA</button>
+   <button class="secondary" onclick="recover()">ESQUECI MINHA SENHA</button>
+  </div>
+
+  <div id="registerBox" style="display:none">
+   <h2>✨ CRIAR CONTA</h2>
+   <input id="newUser" placeholder="Escolha seu usuário" maxlength="24">
+   <input id="newPass" type="password" placeholder="Crie uma senha">
+   <input id="confirmPass" type="password" placeholder="Confirme sua senha">
+   <button onclick="register()">CADASTRAR</button>
+   <button class="secondary" onclick="showLogin()">VOLTAR</button>
+  </div>
+  <p id="authMessage" class="small"></p>
+  <p class="small">Cadastro local • Apenas neste aparelho e navegador</p>
+ </div>
+</section>
+
+<div id="loading" class="screen" style="display:none">
+ <div class="panel">
+  <div class="logo">77</div>
+  <h2 style="text-align:center">CARREGANDO...</h2>
+  <div style="height:8px;background:#333;border-radius:20px;overflow:hidden">
+   <div id="progress" style="height:100%;width:0;background:red"></div>
+  </div>
+  <p id="loadText" class="small">Preparando sua experiência</p>
+ </div>
+</div>
+
+<section id="app">
 <header>
  <div class="logo">77 XIT FF</div>
- <p>PAINEL AUXILIAR • VERSION 7.0</p>
+ <p class="small">PAINEL AUXILIAR • VERSION 8.0</p>
+ <p id="welcome" class="small"></p>
 </header>
-
 <main>
- <section class="card">
-  <h2>🎮 PERFIL DE JOGO</h2>
-  <select id="profile" onchange="loadProfile()">
-   <option value="padrao">Personalizado</option>
-   <option value="precisao">Precisão</option>
-   <option value="rapido">Movimentação rápida</option>
-   <option value="equilibrado">Equilibrado</option>
-  </select>
+
+<section class="card">
+ <h2>🎮 PERFIL DE JOGO</h2>
+ <select id="profile" onchange="loadProfile()">
+  <option value="padrao">Personalizado</option>
+  <option value="precisao">Precisão</option>
+  <option value="rapido">Movimentação rápida</option>
+  <option value="equilibrado">Equilibrado</option>
+ </select>
+</section>
+
+<section class="card">
+ <h2>🎯 SENSIBILIDADE</h2>
+ <div id="sliders"></div>
+ <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
+ <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
+ <p id="saved" class="small"></p>
+</section>
+
+<section class="card">
+ <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
+ <p class="small">Escolha um perfil de referência para ajustar manualmente.</p>
+ <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
+ <div id="configInfo" class="small"></div>
+</section>
+
+<section class="card">
+ <h2>⚡ TREINO DE REFLEXO</h2>
+ <p class="small">Toque quando o botão ficar verde.</p>
+ <div id="reaction" class="result">-- ms</div>
+ <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
+ <p id="reactionInfo" class="small"></p>
+</section>
+
+<section class="card">
+ <h2>🔴 TREINO DE TOQUE</h2>
+ <p class="small">Acerte 20 alvos para concluir.</p>
+ <div id="score" class="result">0 pontos</div>
+ <button onclick="startTargets()">INICIAR TREINO</button>
+ <div id="targetArea"></div>
+</section>
+
+<section class="card">
+ <h2>📱 MINHA CONFIGURAÇÃO</h2>
+ <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
+</section>
+
+<section class="card">
+ <h2>👤 MINHA CONTA</h2>
+ <p id="account" class="small"></p>
+ <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
  </section>
 
- <section class="card">
-  <h2>🎯 SENSIBILIDADE</h2>
-  <div id="sliders"></div>
-  <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
-  <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
-  <p id="saved" style="color:#65df83;text-align:center;font-size:12px"></p>
- </section>
-
- <section class="card">
-  <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
-  <p style="color:#aaa;font-size:12px">Encontre sugestões de configurações e perfis para ajustar manualmente.</p>
-  <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
-  <div id="configInfo" style="font-size:12px;color:#ccc;margin-top:12px"></div>
- </section>
-
- <section class="card">
-  <h2>⚡ TREINO DE REFLEXO</h2>
-  <p style="color:#aaa;font-size:13px">Espere o botão ficar verde e toque o mais rápido possível.</p>
-  <div class="result" id="reaction">-- ms</div>
-  <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
-  <p id="reactionInfo" style="text-align:center;color:#aaa;font-size:12px"></p>
- </section>
-
- <section class="card">
-  <h2>🔴 TREINO DE TOQUE</h2>
-  <p style="color:#aaa;font-size:13px">Acerte 20 alvos para concluir o treino.</p>
-  <div class="result" id="score">0 pontos</div>
-  <button onclick="startTargets()">INICIAR TREINO</button>
-  <div id="targetArea"></div>
- </section>
-
- <section class="card">
-  <h2>📱 MINHA CONFIGURAÇÃO</h2>
-  <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
-  <p style="font-size:11px;color:#888">Os valores são referências para configuração manual. Este painel não modifica o jogo.</p>
- </section>
 </main>
-
 <footer>77 XIT FF • PAINEL AUXILIAR</footer>
+</section>
 
 <script>
-function enterPanel(){
- document.getElementById("intro").classList.add("hide");
+const $=id=>document.getElementById(id);
+const getUsers=()=>{
+ try{return JSON.parse(localStorage.getItem("77users")||"{}")}
+ catch(e){return {}}
+};
+async function hashPassword(password){
+ const data=new TextEncoder().encode(password);
+ const result=await crypto.subtle.digest("SHA-256",data);
+ return Array.from(new Uint8Array(result))
+ .map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function enterSite(){
+ $("intro").classList.add("hide");
+ setTimeout(()=>{
+  $("intro").style.display="none";
+  const active=sessionStorage.getItem("77active");
+  if(active&&getUsers()[active])openPanel(active);
+  else showLogin();
+ },850);
+}
+function showLogin(){
+ $("registerBox").style.display="none";
+ $("loginBox").style.display="block";
+ $("authMessage").textContent="";
+ $("auth").style.display="flex";
+}
+function showRegister(){
+ $("loginBox").style.display="none";
+ $("registerBox").style.display="block";
+ $("authMessage").textContent="";
+}
+async function register(){
+ const user=$("newUser").value.trim().toLowerCase();
+ const pass=$("newPass").value;
+ const confirm=$("confirmPass").value;
+ const msg=$("authMessage");
+ if(!/^[a-z0-9_]{3,24}$/.test(user)){
+  msg.textContent="Use de 3 a 24 caracteres: letras, números ou _.";
+  return;
+ }
+ if(pass.length<8){msg.textContent="A senha precisa ter pelo menos 8 caracteres.";return}
+ if(pass!==confirm){msg.textContent="As senhas não são iguais.";return}
+ const users=getUsers();
+ if(users[user]){msg.textContent="Este usuário já existe neste aparelho.";return}
+ try{
+  users[user]=await hashPassword(pass);
+  localStorage.setItem("77users",JSON.stringify(users));
+  msg.textContent="Conta criada! Agora entre com seus dados.";
+  $("loginUser").value=user;
+  $("loginPass").value="";
+  showLogin();
+  $("authMessage").textContent="Cadastro concluído. Faça seu login.";
+ }catch(e){
+  msg.textContent="Não foi possível criar a conta neste navegador.";
+ }
+}
+async function login(){
+ const user=$("loginUser").value.trim().toLowerCase();
+ const pass=$("loginPass").value;
+ const users=getUsers();
+ if(!users[user]){$("authMessage").textContent="Usuário não encontrado.";return}
+ try{
+  if(await hashPassword(pass)!==users[user]){
+   $("authMessage").textContent="Senha incorreta.";return;
+  }
+  sessionStorage.setItem("77active",user);
+  openPanel(user);
+ }catch(e){
+  $("authMessage").textContent="Navegador não suporta esta operação.";
+ }
+}
+function recover(){
+ $("authMessage").textContent="O cadastro local não possui recuperação automática. Se esquecer a senha, será necessário apagar os dados locais do site e criar uma nova conta.";
+}
+function openPanel(user){
+ $("auth").style.display="none";
+ $("loading").style.display="flex";
+ let n=0;
+ const interval=setInterval(()=>{
+  n+=10;
+  $("progress").style.width=n+"%";
+  $("loadText").textContent="Carregando "+n+"%";
+  if(n>=100){
+   clearInterval(interval);
+   $("loading").style.display="none";
+   $("app").style.display="block";
+   $("welcome").textContent="BEM-VINDO, "+user.toUpperCase();
+   $("account").textContent="Usuário: "+user;
+   loadSavedConfig();
+  }
+ },90);
+}
+function logout(){
+ sessionStorage.removeItem("77active");
+ $("app").style.display="none";
+ $("loading").style.display="none";
+ $("intro").style.display="flex";
+ $("intro").classList.remove("hide");
+ $("loginPass").value="";
+ showLogin();
 }
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[90,85,80,75,50,70];
 let values=[...defaults];
-
+function configKey(){return "77config_"+sessionStorage.getItem("77active")}
 function renderSliders(){
- document.getElementById("sliders").innerHTML=names.map((n,i)=>`
+ $("sliders").innerHTML=names.map((n,i)=>`
  <div class="stat"><span>${n}</span><span class="value" id="v${i}">${values[i]}</span></div>
  <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
  `).join("");
 }
 function changeValue(i,v){
  values[i]=Number(v);
- document.getElementById("v"+i).textContent=v;
+ $("v"+i).textContent=v;
 }
 function loadProfile(){
- const p=document.getElementById("profile").value;
  const profiles={
- padrao:defaults,
- precisao:[85,80,75,65,45,60],
- rapido:[100,95,90,85,65,85],
- equilibrado:[90,85,80,75,50,70]
+  padrao:defaults,
+  precisao:[85,80,75,65,45,60],
+  rapido:[100,95,90,85,65,85],
+  equilibrado:[90,85,80,75,50,70]
  };
- values=[...profiles[p]];
+ values=[...profiles[$("profile").value]];
  renderSliders();
 }
 function saveConfig(){
- localStorage.setItem("77config",JSON.stringify(values));
- document.getElementById("saved").textContent="✓ Configuração salva!";
+ localStorage.setItem(configKey(),JSON.stringify(values));
+ $("saved").textContent="✓ Configuração salva neste aparelho!";
+}
+function loadSavedConfig(){
+ try{
+  const s=JSON.parse(localStorage.getItem(configKey()));
+  if(Array.isArray(s)&&s.length===6)values=s;
+ }catch(e){}
+ renderSliders();
 }
 function resetConfig(){
  values=[...defaults];
- document.getElementById("profile").value="padrao";
+ $("profile").value="padrao";
  renderSliders();
  saveConfig();
 }
 function copySettings(){
  const t=names.map((n,i)=>n+": "+values[i]).join("\n");
  if(navigator.clipboard?.writeText){
- navigator.clipboard.writeText(t).then(()=>alert("Configuração copiada!")).catch(()=>alert(t));
+  navigator.clipboard.writeText(t).then(()=>alert("Configuração copiada!")).catch(()=>alert(t));
  }else alert(t);
 }
 function showConfigs(){
- document.getElementById("configInfo").innerHTML=
- "<b style='color:#ff5555'>Perfis disponíveis:</b><br><br>🎯 Precisão: movimentos mais controlados.<br>⚡ Rápido: referência para movimentos ágeis.<br>⚖️ Equilibrado: configuração intermediária.<br><br>Escolha um perfil acima para experimentar.";
+ $("configInfo").innerHTML="<br>🎯 Precisão: movimentos controlados.<br>⚡ Rápido: movimentos ágeis.<br>⚖️ Equilibrado: referência intermediária.<br><br>Escolha um perfil acima para experimentar.";
 }
-
 let waiting=false,startTime=0,timer=null;
 function reactionGame(){
- const btn=document.getElementById("reactionBtn");
- const info=document.getElementById("reactionInfo");
+ const btn=$("reactionBtn");
  if(waiting){
- clearTimeout(timer);waiting=false;
- btn.style.background="#df2020";btn.textContent="COMEÇAR TREINO";
- info.textContent="Treino cancelado.";return;
+  clearTimeout(timer);
+  waiting=false;
+  btn.textContent="COMEÇAR TREINO";
+  btn.style.background="";
+  $("reactionInfo").textContent="Treino cancelado.";
+  return;
  }
- waiting=true;btn.style.background="#777";btn.textContent="ESPERE...";
- info.textContent="Aguarde o sinal verde!";
+ waiting=true;
+ btn.textContent="ESPERE...";
+ btn.style.background="#777";
+ $("reactionInfo").textContent="Aguarde o sinal verde!";
  timer=setTimeout(()=>{
- if(!waiting)return;
- startTime=Date.now();
- btn.style.background="#16a34a";btn.textContent="TOQUE AGORA!";
+  if(!waiting)return;
+  startTime=Date.now();
+  btn.textContent="TOQUE AGORA!";
+  btn.style.background="#16a34a";
  },1000+Math.random()*3000);
 }
-document.getElementById("reactionBtn").addEventListener("click",()=>{
- const btn=document.getElementById("reactionBtn");
+$("reactionBtn").addEventListener("click",()=>{
+ const btn=$("reactionBtn");
  if(btn.textContent==="TOQUE AGORA!"){
- document.getElementById("reaction").textContent=(Date.now()-startTime)+" ms";
- document.getElementById("reactionInfo").textContent="Muito bem! Tente novamente.";
- waiting=false;btn.style.background="#df2020";btn.textContent="TENTAR NOVAMENTE";
+  $("reaction").textContent=(Date.now()-startTime)+" ms";
+  $("reactionInfo").textContent="Muito bem! Tente novamente.";
+  waiting=false;
+  btn.textContent="TENTAR NOVAMENTE";
+  btn.style.background="";
  }
 });
-
-let points=0,count=0,targetTimer=null;
+let count=0,targetTimer=null;
 function startTargets(){
- clearInterval(targetTimer);points=0;count=0;
- document.getElementById("score").textContent="0 pontos";
- const area=document.getElementById("targetArea");
- function target(){
- area.innerHTML="";
- const t=document.createElement("button");
- t.textContent="●";
- t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
- t.style.left=Math.random()*(area.clientWidth-48)+"px";
- t.style.top=Math.random()*(area.clientHeight-48)+"px";
- t.onclick=()=>{
- points++;count++;
- document.getElementById("score").textContent=points+" pontos";
- if(count>=20){
  clearInterval(targetTimer);
- area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>TREINO CONCLUÍDO!</p>";
- }else target();
- };
- area.appendChild(t);
+ count=0;
+ $("score").textContent="0 pontos";
+ const area=$("targetArea");
+ function target(){
+  area.innerHTML="";
+  const t=document.createElement("button");
+  t.textContent="●";
+  t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
+  t.style.left=Math.random()*Math.max(0,area.clientWidth-48)+"px";
+  t.style.top=Math.random()*Math.max(0,area.clientHeight-48)+"px";
+  t.onclick=()=>{
+   count++;
+   $("score").textContent=count+" pontos";
+   if(count>=20){
+    clearInterval(targetTimer);
+    area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>TREINO CONCLUÍDO!</p>";
+   }else target();
+  };
+  area.appendChild(t);
  }
  target();
  targetTimer=setInterval(()=>{if(count<20)target()},1200);
 }
-try{
- const s=JSON.parse(localStorage.getItem("77config"));
- if(Array.isArray(s)&&s.length===6)values=s;
-}catch(e){}
-renderSliders();
 </script>
 </body>
 </html>
