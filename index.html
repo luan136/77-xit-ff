@@ -3,196 +3,233 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-<title>77 XIT FF 6.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>77 XIT FF 7.0</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
-header{padding:25px 18px;text-align:center;background:linear-gradient(135deg,#240000,#090909);border-bottom:1px solid #ff3030}
-.logo{font-size:34px;font-weight:900;color:#ff3030;letter-spacing:3px}
-header p{color:#aaa;font-size:12px}
-main{padding:16px;max-width:600px;margin:auto}
-.card{background:#151515;border:1px solid #303030;border-radius:14px;padding:17px;margin-bottom:15px}
-h2{font-size:17px;margin:0 0 15px;color:#ff4545}
-button,select{width:100%;padding:13px;border:0;border-radius:9px;background:#e32323;color:white;font-weight:bold;font-size:14px;margin-top:9px}
-button:active{transform:scale(.98)}
-select{background:#292929}
-.stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:17px 0 7px}
-input[type=range]{width:100%;accent-color:#ff3030}
-.value{color:#ff4545;font-weight:bold}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid button{margin:0}
+body{margin:0;background:#050505;color:white;font-family:Arial,sans-serif}
+button,select{cursor:pointer;font-weight:bold}
+#intro{
+ position:fixed;inset:0;z-index:10;display:flex;align-items:center;
+ justify-content:center;text-align:center;overflow:hidden;
+ background:radial-gradient(ellipse at center,#350000 0%,#100000 40%,#020202 100%);
+}
+#intro:before,#intro:after{
+ content:"";position:absolute;width:350px;height:350px;border:1px solid #ff2525;
+ border-radius:50%;animation:pulse 4s infinite;box-shadow:0 0 40px #ff1717;
+}
+#intro:after{width:500px;height:500px;animation-delay:1s;opacity:.3}
+@keyframes pulse{0%{transform:scale(.5);opacity:0}50%{opacity:.5}100%{transform:scale(1.5);opacity:0}}
+.particles{position:absolute;inset:0;background-image:
+ radial-gradient(#ff3333 1px,transparent 1px);
+ background-size:37px 37px;opacity:.25;animation:move 12s linear infinite}
+@keyframes move{to{background-position:100px -150px}}
+.intro-content{position:relative;z-index:2;padding:20px;animation:appear 2s ease}
+@keyframes appear{from{opacity:0;transform:scale(.7);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+.logo-big{font-size:clamp(65px,18vw,110px);font-weight:1000;letter-spacing:5px;
+ color:white;text-shadow:0 0 12px red,0 0 35px #f00,0 0 75px #a00}
+.logo-big span{color:#ff2929}
+.subtitle{letter-spacing:6px;color:#ff7777;font-size:12px;margin:5px}
+.enter{
+ margin-top:45px;padding:17px 35px;border:1px solid #ff4545;border-radius:7px;
+ background:linear-gradient(100deg,#750000,#fa1717,#750000);
+ color:white;font-size:15px;letter-spacing:2px;
+ box-shadow:0 0 25px #ff1717;animation:glow 2s infinite
+}
+@keyframes glow{50%{box-shadow:0 0 45px #ff1717,0 0 70px #a00}}
+#intro.hide{animation:exit 1s forwards}
+@keyframes exit{to{opacity:0;visibility:hidden;transform:scale(1.3)}}
+header{text-align:center;padding:23px;background:linear-gradient(120deg,#250000,#080808);border-bottom:1px solid #8e1111}
+.logo{font-size:32px;font-weight:1000;color:#ff3030;letter-spacing:4px}
+header p{font-size:10px;color:#aaa;letter-spacing:3px}
+main{max-width:600px;margin:auto;padding:15px}
+.card{background:#141414;border:1px solid #333;border-radius:13px;padding:17px;margin-bottom:14px}
+h2{font-size:16px;color:#ff4444;margin:0 0 14px}
+button,select{width:100%;padding:13px;border:0;border-radius:8px;background:#df2020;color:white;margin-top:9px}
 .secondary{background:#292929}
-.result{font-size:25px;font-weight:bold;text-align:center;color:#ff4545;padding:12px}
+.stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:15px 0 6px}
+.value{color:#ff4545}
+input[type=range]{width:100%;accent-color:red}
+.result{text-align:center;font-size:27px;color:#ff4040;font-weight:bold;padding:12px}
+#targetArea{height:180px;position:relative;background:#080808;border-radius:9px;overflow:hidden}
 footer{text-align:center;color:#666;font-size:11px;padding:20px}
+.hidden{display:none}
 </style>
 </head>
 <body>
+
+<div id="intro">
+ <div class="particles"></div>
+ <div class="intro-content">
+  <div class="logo-big"><span>77</span> XIT</div>
+  <div class="subtitle">FREE FIRE EXPERIENCE</div>
+  <p style="color:#aaa;font-size:11px;letter-spacing:3px;margin-top:20px">PREPARE-SE PARA JOGAR</p>
+  <button class="enter" onclick="enterPanel()">▶ ENTRAR NO PAINEL</button>
+  <p style="font-size:10px;color:#777;margin-top:25px">77 XIT FF • VERSION 7.0</p>
+ </div>
+</div>
+
 <header>
-  <div class="logo">77 XIT FF</div>
-  <p>PAINEL AUXILIAR • VERSÃO 6.0</p>
+ <div class="logo">77 XIT FF</div>
+ <p>PAINEL AUXILIAR • VERSION 7.0</p>
 </header>
 
 <main>
-  <section class="card">
-    <h2>🎮 PERFIL DE JOGO</h2>
-    <select id="profile" onchange="loadProfile()">
-      <option value="padrao">Personalizado</option>
-      <option value="precisao">Precisão</option>
-      <option value="rapido">Movimentação rápida</option>
-      <option value="equilibrado">Equilibrado</option>
-    </select>
-    <p style="color:#999;font-size:12px">Escolha um perfil de referência para ajustar sua configuração manualmente.</p>
-  </section>
+ <section class="card">
+  <h2>🎮 PERFIL DE JOGO</h2>
+  <select id="profile" onchange="loadProfile()">
+   <option value="padrao">Personalizado</option>
+   <option value="precisao">Precisão</option>
+   <option value="rapido">Movimentação rápida</option>
+   <option value="equilibrado">Equilibrado</option>
+  </select>
+ </section>
 
-  <section class="card">
-    <h2>🎯 SENSIBILIDADE</h2>
-    <div id="sliders"></div>
-    <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
-    <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
-    <p id="saved" style="color:#65df83;text-align:center;font-size:12px"></p>
-  </section>
+ <section class="card">
+  <h2>🎯 SENSIBILIDADE</h2>
+  <div id="sliders"></div>
+  <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
+  <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
+  <p id="saved" style="color:#65df83;text-align:center;font-size:12px"></p>
+ </section>
 
-  <section class="card">
-    <h2>⚡ TREINO DE REFLEXO</h2>
-    <p style="color:#aaa;font-size:13px">Toque no botão vermelho assim que ele aparecer. Treine sua velocidade de reação.</p>
-    <div class="result" id="reaction">-- ms</div>
-    <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
-    <p id="reactionInfo" style="text-align:center;color:#aaa;font-size:12px"></p>
-  </section>
+ <section class="card">
+  <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
+  <p style="color:#aaa;font-size:12px">Encontre sugestões de configurações e perfis para ajustar manualmente.</p>
+  <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
+  <div id="configInfo" style="font-size:12px;color:#ccc;margin-top:12px"></div>
+ </section>
 
-  <section class="card">
-    <h2>🔴 TREINO DE TOQUE</h2>
-    <p style="color:#aaa;font-size:13px">Toque nos alvos que aparecem para praticar sua agilidade.</p>
-    <div class="result" id="score">0 pontos</div>
-    <button onclick="startTargets()">INICIAR TREINO</button>
-    <div id="targetArea" style="height:180px;position:relative;margin-top:12px;background:#090909;border-radius:10px;overflow:hidden"></div>
-  </section>
+ <section class="card">
+  <h2>⚡ TREINO DE REFLEXO</h2>
+  <p style="color:#aaa;font-size:13px">Espere o botão ficar verde e toque o mais rápido possível.</p>
+  <div class="result" id="reaction">-- ms</div>
+  <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
+  <p id="reactionInfo" style="text-align:center;color:#aaa;font-size:12px"></p>
+ </section>
 
-  <section class="card">
-    <h2>📱 ATALHOS</h2>
-    <button class="secondary" onclick="copySettings()">COPIAR MINHA SENSIBILIDADE</button>
-    <p style="font-size:11px;color:#888">Use os valores como referência e configure manualmente dentro do jogo.</p>
-  </section>
+ <section class="card">
+  <h2>🔴 TREINO DE TOQUE</h2>
+  <p style="color:#aaa;font-size:13px">Acerte 20 alvos para concluir o treino.</p>
+  <div class="result" id="score">0 pontos</div>
+  <button onclick="startTargets()">INICIAR TREINO</button>
+  <div id="targetArea"></div>
+ </section>
+
+ <section class="card">
+  <h2>📱 MINHA CONFIGURAÇÃO</h2>
+  <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
+  <p style="font-size:11px;color:#888">Os valores são referências para configuração manual. Este painel não modifica o jogo.</p>
+ </section>
 </main>
 
-<footer>77 XIT FF • Ferramenta auxiliar independente</footer>
+<footer>77 XIT FF • PAINEL AUXILIAR</footer>
 
 <script>
+function enterPanel(){
+ document.getElementById("intro").classList.add("hide");
+}
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[90,85,80,75,50,70];
 let values=[...defaults];
 
 function renderSliders(){
-  document.getElementById("sliders").innerHTML=names.map((name,i)=>`
-    <div class="stat"><span>${name}</span><span class="value" id="v${i}">${values[i]}</span></div>
-    <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
-  `).join("");
+ document.getElementById("sliders").innerHTML=names.map((n,i)=>`
+ <div class="stat"><span>${n}</span><span class="value" id="v${i}">${values[i]}</span></div>
+ <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
+ `).join("");
 }
 function changeValue(i,v){
-  values[i]=Number(v);
-  document.getElementById("v"+i).textContent=v;
+ values[i]=Number(v);
+ document.getElementById("v"+i).textContent=v;
 }
 function loadProfile(){
-  const p=document.getElementById("profile").value;
-  const profiles={
-    padrao:defaults,
-    precisao:[85,80,75,65,45,60],
-    rapido:[100,95,90,85,65,85],
-    equilibrado:[90,85,80,75,50,70]
-  };
-  values=[...profiles[p]];
-  renderSliders();
-  document.getElementById("saved").textContent="";
+ const p=document.getElementById("profile").value;
+ const profiles={
+ padrao:defaults,
+ precisao:[85,80,75,65,45,60],
+ rapido:[100,95,90,85,65,85],
+ equilibrado:[90,85,80,75,50,70]
+ };
+ values=[...profiles[p]];
+ renderSliders();
 }
 function saveConfig(){
-  localStorage.setItem("77config",JSON.stringify(values));
-  document.getElementById("saved").textContent="✓ Configuração salva neste aparelho!";
+ localStorage.setItem("77config",JSON.stringify(values));
+ document.getElementById("saved").textContent="✓ Configuração salva!";
 }
 function resetConfig(){
-  values=[...defaults];
-  document.getElementById("profile").value="padrao";
-  renderSliders();
-  saveConfig();
+ values=[...defaults];
+ document.getElementById("profile").value="padrao";
+ renderSliders();
+ saveConfig();
 }
 function copySettings(){
-  const text=names.map((n,i)=>n+": "+values[i]).join("\n");
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(()=>alert("Sensibilidade copiada!")).catch(()=>alert(text));
-  }else alert(text);
+ const t=names.map((n,i)=>n+": "+values[i]).join("\n");
+ if(navigator.clipboard?.writeText){
+ navigator.clipboard.writeText(t).then(()=>alert("Configuração copiada!")).catch(()=>alert(t));
+ }else alert(t);
+}
+function showConfigs(){
+ document.getElementById("configInfo").innerHTML=
+ "<b style='color:#ff5555'>Perfis disponíveis:</b><br><br>🎯 Precisão: movimentos mais controlados.<br>⚡ Rápido: referência para movimentos ágeis.<br>⚖️ Equilibrado: configuração intermediária.<br><br>Escolha um perfil acima para experimentar.";
 }
 
 let waiting=false,startTime=0,timer=null;
 function reactionGame(){
-  const btn=document.getElementById("reactionBtn");
-  const info=document.getElementById("reactionInfo");
-  if(waiting){
-    clearTimeout(timer);
-    waiting=false;
-    btn.style.background="#e32323";
-    btn.textContent="COMEÇAR TREINO";
-    info.textContent="Treino cancelado.";
-    return;
-  }
-  waiting=true;
-  btn.style.background="#777";
-  btn.textContent="ESPERE...";
-  info.textContent="Toque quando ficar verde!";
-  timer=setTimeout(()=>{
-    if(!waiting)return;
-    startTime=Date.now();
-    btn.style.background="#16a34a";
-    btn.textContent="TOQUE AGORA!";
-  },1000+Math.random()*3000);
+ const btn=document.getElementById("reactionBtn");
+ const info=document.getElementById("reactionInfo");
+ if(waiting){
+ clearTimeout(timer);waiting=false;
+ btn.style.background="#df2020";btn.textContent="COMEÇAR TREINO";
+ info.textContent="Treino cancelado.";return;
+ }
+ waiting=true;btn.style.background="#777";btn.textContent="ESPERE...";
+ info.textContent="Aguarde o sinal verde!";
+ timer=setTimeout(()=>{
+ if(!waiting)return;
+ startTime=Date.now();
+ btn.style.background="#16a34a";btn.textContent="TOQUE AGORA!";
+ },1000+Math.random()*3000);
 }
 document.getElementById("reactionBtn").addEventListener("click",()=>{
-  const btn=document.getElementById("reactionBtn");
-  if(btn.textContent==="TOQUE AGORA!"){
-    const ms=Date.now()-startTime;
-    document.getElementById("reaction").textContent=ms+" ms";
-    document.getElementById("reactionInfo").textContent="Boa! Tente melhorar seu tempo.";
-    waiting=false;
-    btn.style.background="#e32323";
-    btn.textContent="TENTAR NOVAMENTE";
-  }
+ const btn=document.getElementById("reactionBtn");
+ if(btn.textContent==="TOQUE AGORA!"){
+ document.getElementById("reaction").textContent=(Date.now()-startTime)+" ms";
+ document.getElementById("reactionInfo").textContent="Muito bem! Tente novamente.";
+ waiting=false;btn.style.background="#df2020";btn.textContent="TENTAR NOVAMENTE";
+ }
 });
 
-let points=0,targetTimer=null;
+let points=0,count=0,targetTimer=null;
 function startTargets(){
-  clearInterval(targetTimer);
-  points=0;
-  document.getElementById("score").textContent="0 pontos";
-  const area=document.getElementById("targetArea");
-  area.innerHTML="";
-  let count=0;
-  function target(){
-    area.innerHTML="";
-    const t=document.createElement("button");
-    t.textContent="●";
-    t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
-    t.style.left=Math.random()*(area.clientWidth-48)+"px";
-    t.style.top=Math.random()*(area.clientHeight-48)+"px";
-    t.onclick=()=>{
-      points++;
-      count++;
-      document.getElementById("score").textContent=points+" pontos";
-      if(count>=20){
-        clearInterval(targetTimer);
-        area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>Treino concluído!</p>";
-      }else target();
-    };
-    area.appendChild(t);
-  }
-  target();
-  targetTimer=setInterval(()=>{
-    if(count<20)target();
-  },1200);
+ clearInterval(targetTimer);points=0;count=0;
+ document.getElementById("score").textContent="0 pontos";
+ const area=document.getElementById("targetArea");
+ function target(){
+ area.innerHTML="";
+ const t=document.createElement("button");
+ t.textContent="●";
+ t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
+ t.style.left=Math.random()*(area.clientWidth-48)+"px";
+ t.style.top=Math.random()*(area.clientHeight-48)+"px";
+ t.onclick=()=>{
+ points++;count++;
+ document.getElementById("score").textContent=points+" pontos";
+ if(count>=20){
+ clearInterval(targetTimer);
+ area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>TREINO CONCLUÍDO!</p>";
+ }else target();
+ };
+ area.appendChild(t);
+ }
+ target();
+ targetTimer=setInterval(()=>{if(count<20)target()},1200);
 }
-
 try{
-  const saved=JSON.parse(localStorage.getItem("77config"));
-  if(Array.isArray(saved)&&saved.length===6)values=saved;
+ const s=JSON.parse(localStorage.getItem("77config"));
+ if(Array.isArray(s)&&s.length===6)values=s;
 }catch(e){}
 renderSliders();
 </script>
