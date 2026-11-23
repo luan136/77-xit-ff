@@ -1,16 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
-<title>77 XIT FF 8.0</title>
+<title>77 XIT FF 8.1</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#050505;color:white;font-family:Arial,sans-serif}
+body{margin:0;background:#050505;color:#fff;font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{width:100%;padding:14px;border:0;border-radius:9px;background:linear-gradient(100deg,#850000,#f22);color:white;font-weight:bold;margin-top:10px;cursor:pointer}
+button:disabled{opacity:.55}
 .secondary{background:#292929}
 input,select{width:100%;padding:14px;background:#202020;color:white;border:1px solid #444;border-radius:9px;margin:7px 0}
 .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
@@ -30,7 +31,7 @@ input,select{width:100%;padding:14px;background:#202020;color:white;border:1px s
 .enter{margin-top:40px;letter-spacing:2px;box-shadow:0 0 25px red}
 h2{font-size:17px;color:#ff4545;margin:0 0 15px}
 .small{text-align:center;color:#999;font-size:12px;line-height:1.5}
-#auth,#app{display:none}
+#auth,#app,#loading{display:none}
 header{text-align:center;padding:20px;background:linear-gradient(120deg,#280000,#080808);border-bottom:1px solid #8e1111}
 header .logo{font-size:32px}
 main{max-width:600px;margin:auto;padding:15px}
@@ -41,6 +42,10 @@ input[type=range]{padding:0;accent-color:red}
 .result{text-align:center;font-size:27px;color:#ff4040;font-weight:bold;padding:12px}
 #targetArea{height:180px;position:relative;background:#080808;border-radius:9px;overflow:hidden}
 footer{text-align:center;color:#666;font-size:11px;padding:20px}
+.message{min-height:20px;color:#ff7777;text-align:center;font-size:12px;line-height:1.5}
+.good{color:#75df91}
+.customer{border-bottom:1px solid #333;padding:10px 0;font-size:12px;overflow-wrap:anywhere}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#333;color:#ddd;margin:3px}
 </style>
 </head>
 <body>
@@ -52,228 +57,418 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
   <div class="sub">FREE FIRE EXPERIENCE</div>
   <p class="small">PREPARE-SE PARA JOGAR</p>
   <button class="enter" onclick="enterSite()">▶ ENTRAR NO PAINEL</button>
-  <p class="small">VERSION 8.0</p>
+  <p class="small">VERSION 8.1 ONLINE</p>
  </div>
 </div>
 
 <section id="auth" class="screen">
  <div class="panel">
   <div class="logo">77 XIT</div>
-  <div class="sub">ÁREA DE ACESSO</div>
+  <div class="sub">ÁREA DE ACESSO ONLINE</div>
 
   <div id="loginBox">
    <h2>🔐 ENTRAR NA CONTA</h2>
-   <input id="loginUser" placeholder="Nome de usuário" maxlength="24">
-   <input id="loginPass" type="password" placeholder="Sua senha">
+   <input id="loginEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
+   <input id="loginPass" type="password" placeholder="Sua senha" autocomplete="current-password">
    <button onclick="login()">ENTRAR</button>
    <button class="secondary" onclick="showRegister()">CRIAR CONTA</button>
-   <button class="secondary" onclick="recover()">ESQUECI MINHA SENHA</button>
   </div>
 
   <div id="registerBox" style="display:none">
    <h2>✨ CRIAR CONTA</h2>
-   <input id="newUser" placeholder="Escolha seu usuário" maxlength="24">
-   <input id="newPass" type="password" placeholder="Crie uma senha">
-   <input id="confirmPass" type="password" placeholder="Confirme sua senha">
+   <input id="newName" placeholder="Nome de usuário" maxlength="24" autocomplete="nickname">
+   <input id="newEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
+   <input id="newPass" type="password" placeholder="Crie uma senha (mínimo 8 caracteres)" autocomplete="new-password">
    <button onclick="register()">CADASTRAR</button>
    <button class="secondary" onclick="showLogin()">VOLTAR</button>
   </div>
-  <p id="authMessage" class="small"></p>
-  <p class="small">Cadastro local • Apenas neste aparelho e navegador</p>
+
+  <div id="redeemBox" style="display:none">
+   <h2>🔑 ATIVAR ACESSO</h2>
+   <p class="small">Sua conta foi criada. Digite o código de acesso recebido após a confirmação do pagamento.</p>
+   <input id="accessCode" placeholder="Código de acesso" autocomplete="off">
+   <button onclick="redeemCode()">ATIVAR MEU ACESSO</button>
+   <button class="secondary" onclick="logout()">SAIR</button>
+  </div>
+
+  <p id="authMessage" class="message"></p>
+  <p class="small">Conta online • Acesso vinculado ao seu e-mail</p>
  </div>
 </section>
 
-<div id="loading" class="screen" style="display:none">
+<div id="loading" class="screen">
  <div class="panel">
   <div class="logo">77</div>
   <h2 style="text-align:center">CARREGANDO...</h2>
   <div style="height:8px;background:#333;border-radius:20px;overflow:hidden">
    <div id="progress" style="height:100%;width:0;background:red"></div>
   </div>
-  <p id="loadText" class="small">Preparando sua experiência</p>
+  <p id="loadText" class="small">Verificando seu acesso</p>
  </div>
 </div>
 
 <section id="app">
 <header>
  <div class="logo">77 XIT FF</div>
- <p class="small">PAINEL AUXILIAR • VERSION 8.0</p>
+ <p class="small">PAINEL AUXILIAR • VERSION 8.1 ONLINE</p>
  <p id="welcome" class="small"></p>
 </header>
+
 <main>
-
-<section class="card">
- <h2>🎮 PERFIL DE JOGO</h2>
- <select id="profile" onchange="loadProfile()">
-  <option value="padrao">Personalizado</option>
-  <option value="precisao">Precisão</option>
-  <option value="rapido">Movimentação rápida</option>
-  <option value="equilibrado">Equilibrado</option>
- </select>
-</section>
-
-<section class="card">
- <h2>🎯 SENSIBILIDADE</h2>
- <div id="sliders"></div>
- <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
- <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
- <p id="saved" class="small"></p>
-</section>
-
-<section class="card">
- <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
- <p class="small">Escolha um perfil de referência para ajustar manualmente.</p>
- <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
- <div id="configInfo" class="small"></div>
-</section>
-
-<section class="card">
- <h2>⚡ TREINO DE REFLEXO</h2>
- <p class="small">Toque quando o botão ficar verde.</p>
- <div id="reaction" class="result">-- ms</div>
- <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
- <p id="reactionInfo" class="small"></p>
-</section>
-
-<section class="card">
- <h2>🔴 TREINO DE TOQUE</h2>
- <p class="small">Acerte 20 alvos para concluir.</p>
- <div id="score" class="result">0 pontos</div>
- <button onclick="startTargets()">INICIAR TREINO</button>
- <div id="targetArea"></div>
-</section>
-
-<section class="card">
- <h2>📱 MINHA CONFIGURAÇÃO</h2>
- <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
-</section>
-
-<section class="card">
- <h2>👤 MINHA CONTA</h2>
- <p id="account" class="small"></p>
- <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
+ <section class="card" id="accessCard">
+  <h2>🔐 STATUS DO ACESSO</h2>
+  <p id="accessStatus" class="small">Verificando...</p>
+  <div id="redeemInline" style="display:none">
+   <input id="inlineCode" placeholder="Digite seu código de acesso">
+   <button onclick="redeemInline()">ATIVAR ACESSO</button>
+  </div>
  </section>
 
+ <section class="card">
+  <h2>🎮 PERFIL DE JOGO</h2>
+  <select id="profile" onchange="loadProfile()">
+   <option value="padrao">Personalizado</option>
+   <option value="precisao">Precisão</option>
+   <option value="rapido">Movimentação rápida</option>
+   <option value="equilibrado">Equilibrado</option>
+  </select>
+ </section>
+
+ <section class="card">
+  <h2>🎯 SENSIBILIDADE</h2>
+  <div id="sliders"></div>
+  <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
+  <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
+  <p id="saved" class="small"></p>
+ </section>
+
+ <section class="card">
+  <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
+  <p class="small">Escolha um perfil de referência para ajustar manualmente.</p>
+  <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
+  <div id="configInfo" class="small"></div>
+ </section>
+
+ <section class="card">
+  <h2>⚡ TREINO DE REFLEXO</h2>
+  <p class="small">Toque quando o botão ficar verde.</p>
+  <div id="reaction" class="result">-- ms</div>
+  <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
+  <p id="reactionInfo" class="small"></p>
+ </section>
+
+ <section class="card">
+  <h2>🔴 TREINO DE TOQUE</h2>
+  <p class="small">Acerte 20 alvos para concluir.</p>
+  <div id="score" class="result">0 pontos</div>
+  <button onclick="startTargets()">INICIAR TREINO</button>
+  <div id="targetArea"></div>
+ </section>
+
+ <section class="card">
+  <h2>📱 MINHA CONFIGURAÇÃO</h2>
+  <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
+ </section>
+
+ <section class="card" id="adminCard" style="display:none">
+  <h2>👑 ADMINISTRAÇÃO 77</h2>
+  <p class="small">Gere códigos de acesso de 30 dias e consulte as contas cadastradas.</p>
+  <button onclick="generateCode()">GERAR CÓDIGO DE 30 DIAS</button>
+  <p id="generatedCode" class="result" style="font-size:18px;overflow-wrap:anywhere"></p>
+  <button class="secondary" onclick="loadCustomers()">ATUALIZAR CLIENTES</button>
+  <div id="customerList"></div>
+ </section>
+
+ <section class="card">
+  <h2>👤 MINHA CONTA</h2>
+  <p id="account" class="small"></p>
+  <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
+ </section>
 </main>
-<footer>77 XIT FF • PAINEL AUXILIAR</footer>
+
+<footer>77 XIT FF • PAINEL AUXILIAR • Não modifica o Free Fire</footer>
 </section>
 
 <script>
+const SUPABASE_URL="https://dbjlnpxwselutqyqfoqz.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_TyD1EgLGw7q0jeDrdK73Jw_d_Ik-1vQ";
+const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
 const $=id=>document.getElementById(id);
-const getUsers=()=>{
- try{return JSON.parse(localStorage.getItem("77users")||"{}")}
- catch(e){return {}}
-};
-async function hashPassword(password){
- const data=new TextEncoder().encode(password);
- const result=await crypto.subtle.digest("SHA-256",data);
- return Array.from(new Uint8Array(result))
- .map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-function enterSite(){
- $("intro").classList.add("hide");
- setTimeout(()=>{
-  $("intro").style.display="none";
-  const active=sessionStorage.getItem("77active");
-  if(active&&getUsers()[active])openPanel(active);
-  else showLogin();
- },850);
-}
+let currentUser=null,isAdmin=false,hasAccess=false;
+
 function showLogin(){
  $("registerBox").style.display="none";
+ $("redeemBox").style.display="none";
  $("loginBox").style.display="block";
  $("authMessage").textContent="";
  $("auth").style.display="flex";
 }
+
 function showRegister(){
  $("loginBox").style.display="none";
+ $("redeemBox").style.display="none";
  $("registerBox").style.display="block";
  $("authMessage").textContent="";
+ $("auth").style.display="flex";
 }
+
+function enterSite(){
+ $("intro").classList.add("hide");
+ setTimeout(async()=>{
+  $("intro").style.display="none";
+  $("auth").style.display="flex";
+  const {data:{session}}=await client.auth.getSession();
+  if(session) await startSession(session.user);
+  else showLogin();
+ },850);
+}
+
 async function register(){
- const user=$("newUser").value.trim().toLowerCase();
- const pass=$("newPass").value;
- const confirm=$("confirmPass").value;
+ const name=$("newName").value.trim();
+ const email=$("newEmail").value.trim().toLowerCase();
+ const password=$("newPass").value;
  const msg=$("authMessage");
- if(!/^[a-z0-9_]{3,24}$/.test(user)){
-  msg.textContent="Use de 3 a 24 caracteres: letras, números ou _.";
+
+ if(!/^[a-zA-Z0-9_]{3,24}$/.test(name)){
+  msg.textContent="Use um nome com 3 a 24 caracteres: letras, números ou _.";
   return;
  }
- if(pass.length<8){msg.textContent="A senha precisa ter pelo menos 8 caracteres.";return}
- if(pass!==confirm){msg.textContent="As senhas não são iguais.";return}
- const users=getUsers();
- if(users[user]){msg.textContent="Este usuário já existe neste aparelho.";return}
- try{
-  users[user]=await hashPassword(pass);
-  localStorage.setItem("77users",JSON.stringify(users));
-  msg.textContent="Conta criada! Agora entre com seus dados.";
-  $("loginUser").value=user;
-  $("loginPass").value="";
+
+ if(!email||!email.includes("@")){
+  msg.textContent="Digite um e-mail válido.";
+  return;
+ }
+
+ if(password.length<8){
+  msg.textContent="A senha precisa ter pelo menos 8 caracteres.";
+  return;
+ }
+
+ msg.textContent="Criando sua conta...";
+
+ const {data,error}=await client.auth.signUp({
+  email,
+  password,
+  options:{data:{username:name}}
+ });
+
+ if(error){
+  msg.textContent=error.message;
+  return;
+ }
+
+ if(data.session){
+  await startSession(data.user);
+ }else{
   showLogin();
-  $("authMessage").textContent="Cadastro concluído. Faça seu login.";
- }catch(e){
-  msg.textContent="Não foi possível criar a conta neste navegador.";
+  $("authMessage").textContent="Confira seu e-mail para confirmar o cadastro.";
  }
 }
+
 async function login(){
- const user=$("loginUser").value.trim().toLowerCase();
- const pass=$("loginPass").value;
- const users=getUsers();
- if(!users[user]){$("authMessage").textContent="Usuário não encontrado.";return}
- try{
-  if(await hashPassword(pass)!==users[user]){
-   $("authMessage").textContent="Senha incorreta.";return;
-  }
-  sessionStorage.setItem("77active",user);
-  openPanel(user);
- }catch(e){
-  $("authMessage").textContent="Navegador não suporta esta operação.";
+ const email=$("loginEmail").value.trim().toLowerCase();
+ const password=$("loginPass").value;
+
+ $("authMessage").textContent="Entrando...";
+
+ const {data,error}=await client.auth.signInWithPassword({email,password});
+
+ if(error){
+  $("authMessage").textContent="Não foi possível entrar: "+error.message;
+  return;
  }
+
+ await startSession(data.user);
 }
-function recover(){
- $("authMessage").textContent="O cadastro local não possui recuperação automática. Se esquecer a senha, será necessário apagar os dados locais do site e criar uma nova conta.";
-}
-function openPanel(user){
+
+async function startSession(user){
+ currentUser=user;
  $("auth").style.display="none";
  $("loading").style.display="flex";
- let n=0;
- const interval=setInterval(()=>{
-  n+=10;
-  $("progress").style.width=n+"%";
-  $("loadText").textContent="Carregando "+n+"%";
-  if(n>=100){
-   clearInterval(interval);
-   $("loading").style.display="none";
-   $("app").style.display="block";
-   $("welcome").textContent="BEM-VINDO, "+user.toUpperCase();
-   $("account").textContent="Usuário: "+user;
-   loadSavedConfig();
+ $("progress").style.width="35%";
+ $("loadText").textContent="Verificando conta...";
+
+ const {data:adminData,error:adminError}=await client.rpc("is_77_admin");
+ isAdmin=!adminError&&adminData===true;
+
+ const {data:accessData,error:accessError}=await client.rpc("check_77_access");
+ hasAccess=!accessError&&accessData===true;
+
+ $("progress").style.width="100%";
+
+ setTimeout(()=>{
+  $("loading").style.display="none";
+
+  const username=user.user_metadata?.username||user.email.split("@")[0];
+
+  if(!hasAccess&&!isAdmin){
+   $("app").style.display="none";
+   $("auth").style.display="flex";
+   $("loginBox").style.display="none";
+   $("registerBox").style.display="none";
+   $("redeemBox").style.display="block";
+   $("authMessage").textContent="Conta confirmada. Para liberar o painel, informe seu código de acesso.";
+   return;
   }
- },90);
+
+  $("auth").style.display="none";
+  $("app").style.display="block";
+  $("welcome").textContent="BEM-VINDO, "+username.toUpperCase();
+  $("account").textContent="E-mail: "+user.email;
+  $("adminCard").style.display=isAdmin?"block":"none";
+  $("accessStatus").innerHTML='<span class="good">✓ Acesso liberado</span>';
+  $("redeemInline").style.display="none";
+
+  loadSavedConfig();
+  if(isAdmin)loadCustomers();
+
+ },350);
 }
-function logout(){
- sessionStorage.removeItem("77active");
+
+async function redeemCode(){
+ const code=$("accessCode").value.trim();
+
+ if(!code){
+  $("authMessage").textContent="Digite o código recebido.";
+  return;
+ }
+
+ $("authMessage").textContent="Validando código...";
+
+ const {data,error}=await client.rpc("redeem_77_code",{p_code:code});
+
+ if(error){
+  $("authMessage").textContent="Não foi possível ativar: "+error.message;
+  return;
+ }
+
+ if(data===true){
+  $("authMessage").textContent="Código ativado!";
+  await startSession(currentUser);
+ }else{
+  $("authMessage").textContent="Código inválido, expirado ou já utilizado.";
+ }
+}
+
+async function redeemInline(){
+ const code=$("inlineCode").value.trim();
+
+ if(!code){
+  alert("Digite o código de acesso.");
+  return;
+ }
+
+ const {data,error}=await client.rpc("redeem_77_code",{p_code:code});
+
+ if(error){
+  alert("Erro ao ativar: "+error.message);
+  return;
+ }
+
+ if(data===true){
+  alert("Acesso ativado!");
+  await startSession(currentUser);
+ }else{
+  alert("Código inválido, expirado ou já utilizado.");
+ }
+}
+
+async function logout(){
+ await client.auth.signOut();
+
+ currentUser=null;
+ isAdmin=false;
+ hasAccess=false;
+
  $("app").style.display="none";
  $("loading").style.display="none";
  $("intro").style.display="flex";
  $("intro").classList.remove("hide");
  $("loginPass").value="";
+
  showLogin();
 }
+
+async function generateCode(){
+ $("generatedCode").textContent="Gerando...";
+
+ const {data,error}=await client.rpc("generate_77_code");
+
+ if(error){
+  $("generatedCode").textContent="Erro: "+error.message;
+  return;
+ }
+
+ const code=typeof data==="string"?data:(data?.code||JSON.stringify(data));
+
+ $("generatedCode").textContent=code;
+
+ try{
+  await navigator.clipboard.writeText(code);
+  $("generatedCode").textContent=code+" (copiado)";
+ }catch(e){}
+}
+
+async function loadCustomers(){
+ $("customerList").innerHTML='<p class="small">Carregando clientes...</p>';
+
+ const {data,error}=await client.rpc("list_77_customers");
+
+ if(error){
+  $("customerList").textContent="Erro ao carregar: "+error.message;
+  return;
+ }
+
+ if(!data||!data.length){
+  $("customerList").innerHTML='<p class="small">Nenhum cliente com acesso encontrado.</p>';
+  return;
+ }
+
+ $("customerList").innerHTML=data.map(c=>{
+  const expiry=c.expires_at?new Date(c.expires_at).toLocaleString("pt-BR"):"Sem data";
+
+  return `<div class="customer">
+   <b>${escapeHtml(c.email||c.user_id||"Conta")}</b><br>
+   <span class="pill">${c.active?"Ativo":"Inativo"}</span><br>
+   Expira: ${escapeHtml(expiry)}
+  </div>`;
+ }).join("");
+}
+
+function escapeHtml(v){
+ return String(v).replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[90,85,80,75,50,70];
 let values=[...defaults];
-function configKey(){return "77config_"+sessionStorage.getItem("77active")}
+
+function configKey(){
+ return "77config_"+(currentUser?.id||"guest");
+}
+
 function renderSliders(){
  $("sliders").innerHTML=names.map((n,i)=>`
- <div class="stat"><span>${n}</span><span class="value" id="v${i}">${values[i]}</span></div>
- <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
+  <div class="stat">
+   <span>${n}</span>
+   <span class="value" id="v${i}">${values[i]}</span>
+  </div>
+  <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
  `).join("");
 }
+
 function changeValue(i,v){
  values[i]=Number(v);
  $("v"+i).textContent=v;
 }
+
 function loadProfile(){
  const profiles={
   padrao:defaults,
@@ -281,38 +476,57 @@ function loadProfile(){
   rapido:[100,95,90,85,65,85],
   equilibrado:[90,85,80,75,50,70]
  };
+
  values=[...profiles[$("profile").value]];
  renderSliders();
 }
+
 function saveConfig(){
  localStorage.setItem(configKey(),JSON.stringify(values));
  $("saved").textContent="✓ Configuração salva neste aparelho!";
 }
+
 function loadSavedConfig(){
  try{
   const s=JSON.parse(localStorage.getItem(configKey()));
   if(Array.isArray(s)&&s.length===6)values=s;
  }catch(e){}
+
  renderSliders();
 }
+
 function resetConfig(){
  values=[...defaults];
  $("profile").value="padrao";
  renderSliders();
  saveConfig();
 }
+
 function copySettings(){
  const t=names.map((n,i)=>n+": "+values[i]).join("\n");
+
  if(navigator.clipboard?.writeText){
-  navigator.clipboard.writeText(t).then(()=>alert("Configuração copiada!")).catch(()=>alert(t));
- }else alert(t);
+  navigator.clipboard.writeText(t)
+   .then(()=>alert("Configuração copiada!"))
+   .catch(()=>alert(t));
+ }else{
+  alert(t);
+ }
 }
+
 function showConfigs(){
- $("configInfo").innerHTML="<br>🎯 Precisão: movimentos controlados.<br>⚡ Rápido: movimentos ágeis.<br>⚖️ Equilibrado: referência intermediária.<br><br>Escolha um perfil acima para experimentar.";
+ $("configInfo").innerHTML=
+ "<br>🎯 Precisão: movimentos controlados."+
+ "<br>⚡ Rápido: movimentos ágeis."+
+ "<br>⚖️ Equilibrado: referência intermediária."+
+ "<br><br>Escolha um perfil acima para experimentar.";
 }
+
 let waiting=false,startTime=0,timer=null;
+
 function reactionGame(){
  const btn=$("reactionBtn");
+
  if(waiting){
   clearTimeout(timer);
   waiting=false;
@@ -321,10 +535,12 @@ function reactionGame(){
   $("reactionInfo").textContent="Treino cancelado.";
   return;
  }
+
  waiting=true;
  btn.textContent="ESPERE...";
  btn.style.background="#777";
  $("reactionInfo").textContent="Aguarde o sinal verde!";
+
  timer=setTimeout(()=>{
   if(!waiting)return;
   startTime=Date.now();
@@ -332,8 +548,10 @@ function reactionGame(){
   btn.style.background="#16a34a";
  },1000+Math.random()*3000);
 }
+
 $("reactionBtn").addEventListener("click",()=>{
  const btn=$("reactionBtn");
+
  if(btn.textContent==="TOQUE AGORA!"){
   $("reaction").textContent=(Date.now()-startTime)+" ms";
   $("reactionInfo").textContent="Muito bem! Tente novamente.";
@@ -342,32 +560,55 @@ $("reactionBtn").addEventListener("click",()=>{
   btn.style.background="";
  }
 });
+
 let count=0,targetTimer=null;
+
 function startTargets(){
  clearInterval(targetTimer);
  count=0;
  $("score").textContent="0 pontos";
+
  const area=$("targetArea");
+
  function target(){
   area.innerHTML="";
+
   const t=document.createElement("button");
   t.textContent="●";
-  t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
+
+  t.style.cssText=
+   "position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
+
   t.style.left=Math.random()*Math.max(0,area.clientWidth-48)+"px";
   t.style.top=Math.random()*Math.max(0,area.clientHeight-48)+"px";
+
   t.onclick=()=>{
    count++;
    $("score").textContent=count+" pontos";
+
    if(count>=20){
     clearInterval(targetTimer);
     area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>TREINO CONCLUÍDO!</p>";
-   }else target();
+   }else{
+    target();
+   }
   };
+
   area.appendChild(t);
  }
+
  target();
- targetTimer=setInterval(()=>{if(count<20)target()},1200);
+
+ targetTimer=setInterval(()=>{
+  if(count<20)target();
+ },1200);
 }
+
+client.auth.onAuthStateChange((_event,session)=>{
+ if(session&&!currentUser){
+  setTimeout(()=>startSession(session.user),0);
+ }
+});
 </script>
 </body>
 </html>
