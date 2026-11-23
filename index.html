@@ -3,124 +3,132 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#101010">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="77 XIT FF">
 <title>77 XIT FF</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
-header{padding:24px 18px;background:#1a1a1a;border-bottom:2px solid #e32636}
-.logo{font-size:30px;font-weight:900;color:#ff303f}
+body{margin:0;background:#101010;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 18px;background:#191919;border-bottom:2px solid #e32636}
+.logo{font-size:32px;font-weight:900;color:#ff303f}
 .logo span{color:white}
-header p{color:#aaa;margin-bottom:0}
-main{padding:18px;max-width:650px;margin:auto}
+header p{color:#aaa;font-size:12px}
+main{padding:16px;max-width:650px;margin:auto}
+nav{display:flex;gap:8px;overflow:auto;margin-bottom:16px}
+nav button{white-space:nowrap;background:#292929;color:white;border:0;border-radius:8px;padding:12px}
+nav button.active{background:#e32636}
 .card{background:#1c1c1c;border:1px solid #333;border-radius:14px;padding:17px;margin-bottom:15px}
 h2{font-size:18px;margin-top:0}
-label{display:block;color:#ddd;margin:15px 0 8px}
+label{display:block;margin:17px 0 8px;color:#ddd}
 input[type=range]{width:100%;accent-color:#f22}
-input[type=text],select{width:100%;padding:12px;border-radius:8px;background:#292929;color:white;border:1px solid #555}
+input[type=text],select{width:100%;padding:13px;border-radius:8px;background:#292929;color:white;border:1px solid #555}
 .value{color:#ff4655;font-weight:bold}
-button{padding:13px;border:0;border-radius:9px;background:#e32636;color:white;font-weight:bold;font-size:15px}
+button.action{padding:13px;border:0;border-radius:9px;background:#e32636;color:white;font-weight:bold;font-size:15px}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
 .actions button{flex:1}
-small{color:#aaa}
-nav{display:flex;gap:8px;overflow:auto;margin-bottom:16px}
-nav button{white-space:nowrap;background:#292929}
-nav button.active{background:#e32636}
+small{color:#aaa;line-height:1.5}
 .page{display:none}
 .page.active{display:block}
 footer{text-align:center;color:#777;padding:20px}
 </style>
 </head>
+
 <body>
 <header>
  <div class="logo">77 <span>XIT FF</span></div>
- <p>PAINEL DE CONFIGURAÇÕES</p>
+ <p>PAINEL AUXILIAR DE CONFIGURAÇÕES</p>
 </header>
 
 <main>
- <nav>
-  <button class="active" data-page="sens">Sensibilidade</button>
-  <button data-page="mira">Mira</button>
-  <button data-page="hud">HUD</button>
-  <button data-page="perfil">Perfis</button>
- </nav>
+<nav>
+<button class="active" data-page="sens">Sensibilidade</button>
+<button data-page="mira">Mira</button>
+<button data-page="hud">HUD</button>
+<button data-page="perfil">Perfis</button>
+</nav>
 
- <section class="page active" id="sens">
-  <div class="card">
-   <h2>🎯 Sensibilidade</h2>
-   <small>Ajuste os valores e teste no treinamento do jogo.</small>
-   <div id="sliders"></div>
-  </div>
- </section>
+<section class="page active" id="sens">
+<div class="card">
+<h2>🎯 Sensibilidade</h2>
+<small>Ajuste e teste seus valores no treinamento.</small>
+<div id="sliders"></div>
+</div>
+</section>
 
- <section class="page" id="mira">
-  <div class="card">
-   <h2>🎯 Configuração de mira</h2>
-   <label>Estilo de mira</label>
-   <select id="aim">
-    <option>Equilibrada</option>
-    <option>Precisão</option>
-    <option>Movimentação rápida</option>
-   </select>
-   <p><small>Use como referência para ajustar sua configuração manualmente.</small></p>
-  </div>
- </section>
+<section class="page" id="mira">
+<div class="card">
+<h2>🎯 Mira</h2>
+<label>Estilo de configuração</label>
+<select id="aim">
+<option>Equilibrada</option>
+<option>Precisão</option>
+<option>Movimentação rápida</option>
+</select>
+<label>Objetivo</label>
+<select id="objective">
+<option>Controle geral</option>
+<option>Treinar capa</option>
+<option>Precisão de longa distância</option>
+</select>
+<p><small>São recomendações para ajuste manual. Não controlam a mira dentro do jogo.</small></p>
+</div>
+</section>
 
- <section class="page" id="hud">
-  <div class="card">
-   <h2>📱 HUD</h2>
-   <label>Estilo de controle</label>
-   <select id="layout">
-    <option>Dois dedos</option>
-    <option>Três dedos</option>
-    <option>Quatro dedos</option>
-   </select>
-   <label>Tamanho desejado dos botões</label>
-   <input id="buttonSize" type="range" min="30" max="100" value="60">
-   <p class="value" id="buttonValue">60%</p>
-   <small>Planejamento de HUD. Não altera os botões dentro do Free Fire.</small>
-  </div>
- </section>
+<section class="page" id="hud">
+<div class="card">
+<h2>📱 HUD</h2>
+<label>Quantidade de dedos</label>
+<select id="layout">
+<option>Dois dedos</option>
+<option>Três dedos</option>
+<option>Quatro dedos</option>
+<option>Personalizado</option>
+</select>
+<label>Tamanho desejado dos botões</label>
+<input id="buttonSize" type="range" min="30" max="100" value="60">
+<p class="value" id="buttonValue">60%</p>
+<small>Use como referência para organizar os botões manualmente no Free Fire.</small>
+</div>
+</section>
 
- <section class="page" id="perfil">
-  <div class="card">
-   <h2>💾 Salvar perfil</h2>
-   <label>Nome do perfil</label>
-   <input id="profileName" type="text" placeholder="Ex.: Minha configuração">
-   <div class="actions" style="margin-top:15px">
-    <button id="save">Salvar</button>
-    <button id="load">Carregar</button>
-   </div>
-   <p id="status" class="value"></p>
-  </div>
- </section>
+<section class="page" id="perfil">
+<div class="card">
+<h2>💾 Meus perfis</h2>
+<label>Nome do perfil</label>
+<input id="profileName" type="text" placeholder="Minha configuração">
+<div class="actions" style="margin-top:15px">
+<button class="action" id="save">Salvar perfil</button>
+<button class="action" id="load">Carregar perfil</button>
+</div>
+<p id="status" class="value"></p>
+</div>
+</section>
 
- <div class="actions">
-  <button id="reset">Restaurar ajustes</button>
-  <button id="export">Exportar configuração</button>
- </div>
+<div class="actions">
+<button class="action" id="reset">Restaurar ajustes</button>
+<button class="action" id="export">Exportar configuração</button>
+</div>
+
+<footer>77 XIT FF • Desenvolvido para treinamento</footer>
 </main>
-
-<footer>77 XIT FF • Painel auxiliar</footer>
 
 <script>
 const names=[
- ["Geral",0,200,100],
- ["Ponto vermelho",0,200,95],
- ["Mira 2x",0,200,90],
- ["Mira 4x",0,200,85],
- ["Mira AWM",0,200,50],
- ["Olhadinha",0,200,80]
+["Geral",100],["Ponto vermelho",95],
+["Mira 2x",90],["Mira 4x",85],
+["Mira AWM",50],["Olhadinha",80]
 ];
 
 const sliders=document.getElementById("sliders");
 
-names.forEach(([name,min,max,initial],i)=>{
+names.forEach(([name,initial],i)=>{
  const wrap=document.createElement("div");
  wrap.innerHTML=`
  <label>${name}: <span class="value" id="v${i}">${initial}</span></label>
- <input type="range" min="${min}" max="${max}" value="${initial}" id="s${i}">
+ <input type="range" min="0" max="200" value="${initial}" id="s${i}">
  `;
  sliders.appendChild(wrap);
  wrap.querySelector("input").addEventListener("input",e=>{
@@ -138,14 +146,18 @@ document.querySelectorAll("nav button").forEach(btn=>{
 });
 
 const size=document.getElementById("buttonSize");
-size.oninput=()=>document.getElementById("buttonValue").textContent=size.value+"%";
+size.oninput=()=>{
+ document.getElementById("buttonValue").textContent=size.value+"%";
+};
 
 function getConfig(){
  return {
   sensibilidade:names.map((n,i)=>({
-   nome:n[0],valor:Number(document.getElementById("s"+i).value)
+   nome:n[0],
+   valor:Number(document.getElementById("s"+i).value)
   })),
   mira:document.getElementById("aim").value,
+  objetivo:document.getElementById("objective").value,
   hud:document.getElementById("layout").value,
   tamanhoBotoes:Number(size.value)
  };
@@ -153,7 +165,10 @@ function getConfig(){
 
 document.getElementById("save").onclick=()=>{
  const name=document.getElementById("profileName").value.trim();
- if(!name){document.getElementById("status").textContent="Digite um nome para o perfil.";return}
+ if(!name){
+  document.getElementById("status").textContent="Digite um nome.";
+  return;
+ }
  localStorage.setItem("77perfil:"+name,JSON.stringify(getConfig()));
  document.getElementById("status").textContent="Perfil salvo neste aparelho!";
 };
@@ -161,13 +176,17 @@ document.getElementById("save").onclick=()=>{
 document.getElementById("load").onclick=()=>{
  const name=document.getElementById("profileName").value.trim();
  const data=localStorage.getItem("77perfil:"+name);
- if(!data){document.getElementById("status").textContent="Perfil não encontrado.";return}
+ if(!data){
+  document.getElementById("status").textContent="Perfil não encontrado.";
+  return;
+ }
  const c=JSON.parse(data);
  c.sensibilidade.forEach((v,i)=>{
   document.getElementById("s"+i).value=v.valor;
   document.getElementById("v"+i).textContent=v.valor;
  });
  document.getElementById("aim").value=c.mira;
+ document.getElementById("objective").value=c.objetivo;
  document.getElementById("layout").value=c.hud;
  size.value=c.tamanhoBotoes;
  document.getElementById("buttonValue").textContent=size.value+"%";
@@ -176,18 +195,25 @@ document.getElementById("load").onclick=()=>{
 
 document.getElementById("reset").onclick=()=>{
  names.forEach((n,i)=>{
-  document.getElementById("s"+i).value=n[3];
-  document.getElementById("v"+i).textContent=n[3];
+  document.getElementById("s"+i).value=n[1];
+  document.getElementById("v"+i).textContent=n[1];
  });
+ document.getElementById("status").textContent="Valores restaurados.";
 };
 
 document.getElementById("export").onclick=()=>{
  const blob=new Blob([JSON.stringify(getConfig(),null,2)],{type:"application/json"});
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
- a.href=url;a.download="77-configuracao.json";a.click();
+ a.href=url;
+ a.download="77-configuracao.json";
+ a.click();
  URL.revokeObjectURL(url);
 };
+
+if("serviceWorker" in navigator && location.protocol==="https:"){
+ navigator.serviceWorker.register("./sw.js").catch(console.error);
+}
 </script>
 </body>
 </html>
