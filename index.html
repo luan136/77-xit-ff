@@ -5,181 +5,140 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#090909">
-<title>77 XIT FF | THE 77</title>
+<title>77 XIT FF 4.1</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#090909;color:white;font-family:Arial}
 button,input,select{font:inherit}
-#intro{position:fixed;inset:0;z-index:10;background:radial-gradient(circle,#361010,#090909 65%);display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
-.emblem{font-size:85px;font-weight:1000;color:#ff303f;text-shadow:0 0 35px #e32636;animation:pulse 2s infinite}
-@keyframes pulse{50%{transform:scale(1.07)}}
-.intro-content{width:100%;max-width:420px}
-.intro-content h1{font-size:29px}
-.intro-content p{color:#aaa;letter-spacing:2px;font-size:12px}
-#app{display:none}
-header{padding:20px;background:#171717;border-bottom:2px solid #e32636}
-.logo{font-size:29px;font-weight:1000;color:#ff303f}
+header{padding:20px;background:#171717;border-bottom:2px solid #ed2638}
+.logo{font-size:30px;font-weight:900;color:#ff3045}
 .logo span{color:white}
-header small{color:#aaa}
-main{max-width:650px;margin:auto;padding:15px}
-nav{display:flex;gap:7px;overflow:auto;margin-bottom:15px}
-nav button{background:#292929;color:white;border:0;padding:12px;border-radius:8px;white-space:nowrap}
-nav button.active{background:#e32636}
+small,.muted{color:#aaa}
+main{max-width:650px;margin:auto;padding:14px}
+nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+nav button{flex:0 0 auto;background:#292929;color:white;border:0;border-radius:9px;padding:13px}
+nav button.active,.action{background:#e32636;color:white}
 .page{display:none}
 .page.active{display:block}
-.card{background:#191919;border:1px solid #333;border-radius:13px;padding:16px;margin-bottom:14px}
-h2{font-size:18px;margin-top:0}
-label{display:block;color:#ddd;margin:15px 0 7px}
-input,select{width:100%;background:#292929;color:white;border:1px solid #555;padding:12px;border-radius:8px}
-input[type=range]{padding:0;accent-color:#f33}
-button.action{background:#e32636;color:white;border:0;border-radius:8px;padding:14px;font-weight:bold}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:#191919;border:1px solid #383838;border-radius:14px;padding:16px;margin:12px 0}
+h2{font-size:19px}
+label{display:block;margin:15px 0 7px;color:#ddd}
+input,select{width:100%;padding:12px;background:#292929;color:white;border:1px solid #555;border-radius:8px}
+input[type=range]{padding:0;accent-color:#ed2638}
+.action{border:0;border-radius:9px;padding:14px;font-weight:bold}
+.actions{display:flex;gap:9px}
 .actions button{flex:1}
 .value{color:#ff4655;font-weight:bold}
-small,.muted{color:#aaa}
-.item{padding:12px 0;border-bottom:1px solid #333}
-#arena{height:280px;background:#080808;border:1px solid #555;border-radius:12px;position:relative;overflow:hidden}
-.target{position:absolute;width:42px;height:42px;border-radius:50%;background:#f33;border:5px solid white;box-shadow:0 0 15px #f33;padding:0}
+#arena{height:300px;position:relative;background:#080808;border:2px solid #555;border-radius:12px;overflow:hidden;touch-action:manipulation}
+.target{position:absolute;width:48px;height:48px;border-radius:50%;border:5px solid white;background:#ed2638;box-shadow:0 0 18px #ff263d;padding:0;transform:translate(-50%,-50%);z-index:2}
+#gameStatus{min-height:20px}
 footer{text-align:center;color:#777;padding:20px}
 </style>
 </head>
 <body>
-
-<div id="intro">
- <div class="intro-content">
-  <div class="emblem">77</div>
-  <h1>77 XIT FF</h1>
-  <p>THE 77 • ELITE GAMING</p>
-  <button class="action" id="enter" style="width:100%;margin-top:20px">ENTRAR NO PAINEL</button>
-  <p>PAINEL AUXILIAR</p>
- </div>
-</div>
-
-<div id="app">
 <header>
  <div class="logo">77 <span>XIT FF</span></div>
- <small>THE 77 • VERSÃO 4.0</small>
+ <small>THE 77 • VERSÃO 4.1</small>
 </header>
 
 <main>
 <div class="card">
- <h2>🏍️ Free Fire</h2>
- <p class="muted">Abra o jogo instalado no seu iPhone.</p>
+ <h2>🎮 Free Fire</h2>
  <button class="action" id="openGame" style="width:100%">ENTRAR NO FREE FIRE</button>
- <p id="gameStatus" class="muted"></p>
+ <p id="gameStatus" class="muted">Abre o jogo, se o iOS reconhecer o endereço.</p>
 </div>
 
 <nav>
-<button class="active" data-page="sens">Sensibilidade</button>
-<button data-page="calc">Calculadora</button>
-<button data-page="perfil">Perfis</button>
-<button data-page="hist">Histórico</button>
-<button data-page="treino">Treinamento</button>
+ <button class="active" data-page="sens">Sensibilidade</button>
+ <button data-page="calc">Calculadora</button>
+ <button data-page="perfil">Perfis</button>
+ <button data-page="hist">Histórico</button>
+ <button data-page="treino">Treinamento</button>
 </nav>
 
 <section class="page active" id="sens">
-<div class="card">
-<h2>🎯 Sensibilidade</h2>
-<div id="sliders"></div>
-</div>
-<div class="card">
-<h2>🎮 Estilo de jogo</h2>
-<select id="style">
-<option>Equilibrado</option>
-<option>Precisão</option>
-<option>Movimentação rápida</option>
-</select>
-</div>
+ <div class="card">
+  <h2>🎯 Sensibilidade</h2>
+  <div id="sliders"></div>
+ </div>
+ <div class="card">
+  <h2>Estilo de jogo</h2>
+  <select id="style">
+   <option>Equilibrado</option>
+   <option>Precisão</option>
+   <option>Movimentação rápida</option>
+  </select>
+ </div>
 </section>
 
 <section class="page" id="calc">
-<div class="card">
-<h2>🧮 Calculadora</h2>
-<label>Valor atual</label>
-<input id="current" type="number" min="0" max="200" value="100">
-<label>Variação desejada (%)</label>
-<input id="variation" type="number" value="5">
-<button class="action" id="calculate" style="width:100%;margin-top:15px">CALCULAR</button>
-<h2 id="result" class="value">Novo valor: 100</h2>
-</div>
+ <div class="card">
+  <h2>🧮 Calculadora</h2>
+  <label>Valor atual</label>
+  <input id="current" type="number" value="100" min="0" max="200">
+  <label>Variação (%)</label>
+  <input id="variation" type="number" value="5">
+  <button class="action" id="calculate" style="width:100%;margin-top:15px">CALCULAR</button>
+  <h2 class="value" id="result">Novo valor: 100</h2>
+ </div>
 </section>
 
 <section class="page" id="perfil">
-<div class="card">
-<h2>💾 Perfis personalizados</h2>
-<label>Nome do perfil</label>
-<input id="profileName" placeholder="Minha configuração">
-<div class="actions" style="margin-top:12px">
-<button class="action" id="save">Salvar</button>
-<button class="action" id="load">Carregar</button>
-</div>
-<div id="profileList"></div>
-<p id="profileStatus" class="value"></p>
-</div>
-<div class="card">
-<h2>📤 Compartilhar</h2>
-<button class="action" id="share" style="width:100%">COMPARTILHAR CONFIGURAÇÃO</button>
-</div>
+ <div class="card">
+  <h2>💾 Perfis</h2>
+  <label>Nome do perfil</label>
+  <input id="profileName" placeholder="THE 77">
+  <div class="actions" style="margin-top:12px">
+   <button class="action" id="save">SALVAR</button>
+   <button class="action" id="load">CARREGAR</button>
+  </div>
+  <p id="profileStatus" class="value"></p>
+  <div id="profileList"></div>
+ </div>
+ <div class="card">
+  <button class="action" id="share" style="width:100%">COMPARTILHAR CONFIGURAÇÃO</button>
+ </div>
 </section>
 
 <section class="page" id="hist">
-<div class="card">
-<h2>📋 Histórico</h2>
-<div id="historyList" class="muted"></div>
-<button class="action" id="clearHistory" style="margin-top:15px">Limpar histórico</button>
-</div>
+ <div class="card">
+  <h2>📋 Histórico</h2>
+  <div id="historyList"></div>
+  <button class="action" id="clearHistory">LIMPAR HISTÓRICO</button>
+ </div>
 </section>
 
 <section class="page" id="treino">
-<div class="card">
-<h2>🎯 Treinamento de mira</h2>
-<p class="muted">Toque nos alvos que aparecem na tela.</p>
-<div class="actions">
-<button class="action" id="startTraining">COMEÇAR</button>
-<button class="action" id="stopTraining">PARAR</button>
-</div>
-<p>Acertos: <span class="value" id="hits">0</span></p>
-<p>Tempo: <span class="value" id="timer">30</span>s</p>
-<div id="arena"></div>
-<p id="trainingStatus" class="value">Pronto para treinar!</p>
-</div>
+ <div class="card">
+  <h2>🎯 Treinamento de mira</h2>
+  <p class="muted">Toque no alvo vermelho o máximo de vezes em 30 segundos.</p>
+  <div class="actions">
+   <button class="action" id="startTraining">COMEÇAR</button>
+   <button class="action" id="stopTraining">PARAR</button>
+  </div>
+  <p>Acertos: <span class="value" id="hits">0</span></p>
+  <p>Tempo: <span class="value" id="timer">30</span>s</p>
+  <div id="arena"></div>
+  <p id="trainingStatus" class="value">Pronto para treinar!</p>
+ </div>
 </section>
 
-<div class="actions">
-<button class="action" id="reset">RESTAURAR PADRÃO</button>
-<button class="action" id="export">EXPORTAR JSON</button>
+<div class="card">
+ <div class="actions">
+  <button class="action" id="reset">RESTAURAR</button>
+  <button class="action" id="export">EXPORTAR</button>
+ </div>
 </div>
 <footer>77 XIT FF • THE 77</footer>
 </main>
-</div>
 
 <script>
 const $=id=>document.getElementById(id);
-
-$("enter").onclick=()=>{
- $("intro").style.display="none";
- $("app").style.display="block";
-};
-
-$("openGame").onclick=()=>{
- $("gameStatus").textContent="Tentando abrir o Free Fire...";
- window.location.href="freefire://";
-};
-
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[100,95,90,85,50,80];
+
 let history=JSON.parse(localStorage.getItem("77history")||"[]");
 let profiles=JSON.parse(localStorage.getItem("77profiles")||"{}");
-
-names.forEach((name,i)=>{
- const div=document.createElement("div");
- div.innerHTML=`<label>${name}: <span class="value" id="v${i}">${defaults[i]}</span></label><input id="s${i}" type="range" min="0" max="200" value="${defaults[i]}">`;
- $("sliders").appendChild(div);
- $("s"+i).addEventListener("input",()=>{
-  $("v"+i).textContent=$("s"+i).value;
- });
- $("s"+i).addEventListener("change",record);
-});
 
 function config(){
  return {
@@ -194,22 +153,31 @@ function apply(c){
  });
  $("style").value=c.style;
 }
-function record(){
- history.unshift({date:new Date().toLocaleString("pt-BR"),config:config()});
- history=history.slice(0,40);
- localStorage.setItem("77history",JSON.stringify(history));
- renderHistory();
-}
 function renderHistory(){
- $("historyList").innerHTML=history.length?history.map(h=>
- `<div class="item">${h.date}<br><small>${h.config.values.join(" / ")}</small></div>`
- ).join(""):"Nenhum ajuste registrado.";
+ $("historyList").innerHTML=history.length
+ ?history.map(h=>`<p class="muted">${h.date}<br>${h.values.join(" / ")}</p>`).join("")
+ :"<p class='muted'>Nenhum ajuste registrado.</p>";
 }
 function renderProfiles(){
  $("profileList").innerHTML=Object.keys(profiles).map(n=>
- `<div class="item">${n}</div>`
- ).join("")||"<small>Nenhum perfil salvo.</small>";
+ `<p class="muted">${n}</p>`).join("")||"<p class='muted'>Nenhum perfil salvo.</p>";
 }
+function record(){
+ history.unshift({date:new Date().toLocaleString("pt-BR"),values:config().values});
+ history=history.slice(0,30);
+ localStorage.setItem("77history",JSON.stringify(history));
+ renderHistory();
+}
+
+names.forEach((name,i)=>{
+ const div=document.createElement("div");
+ div.innerHTML=`<label>${name}: <b class="value" id="v${i}">${defaults[i]}</b></label><input type="range" min="0" max="200" value="${defaults[i]}" id="s${i}">`;
+ $("sliders").appendChild(div);
+ $("s"+i).oninput=()=>{
+  $("v"+i).textContent=$("s"+i).value;
+ };
+ $("s"+i).onchange=record;
+});
 
 document.querySelectorAll("nav button").forEach(btn=>{
  btn.onclick=()=>{
@@ -226,8 +194,7 @@ $("calculate").onclick=()=>{
  if(!Number.isFinite(v)||!Number.isFinite(pct)){
   $("result").textContent="Confira os valores.";return;
  }
- const result=Math.max(0,Math.min(200,Math.round(v*(1+pct/100))));
- $("result").textContent="Novo valor: "+result;
+ $("result").textContent="Novo valor: "+Math.max(0,Math.min(200,Math.round(v*(1+pct/100))));
 };
 
 $("save").onclick=()=>{
@@ -249,16 +216,8 @@ $("share").onclick=async()=>{
  const data=JSON.stringify(config(),null,2);
  try{
   if(navigator.share)await navigator.share({title:"77 XIT FF",text:data});
-  else if(navigator.clipboard){await navigator.clipboard.writeText(data);alert("Configuração copiada!");}
-  else alert(data);
+  else{await navigator.clipboard.writeText(data);alert("Configuração copiada!");}
  }catch(e){}
-};
-$("export").onclick=()=>{
- const blob=new Blob([JSON.stringify(config(),null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="77-configuracao.json";a.click();
- URL.revokeObjectURL(url);
 };
 $("reset").onclick=()=>{
  apply({values:defaults,style:"Equilibrado"});
@@ -269,19 +228,42 @@ $("clearHistory").onclick=()=>{
  localStorage.removeItem("77history");
  renderHistory();
 };
-renderHistory();
-renderProfiles();
+$("export").onclick=()=>{
+ const blob=new Blob([JSON.stringify(config(),null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="77-configuracao.json";a.click();
+ URL.revokeObjectURL(url);
+};
 
+// Abertura externa do Free Fire
+$("openGame").onclick=()=>{
+ $("gameStatus").textContent="Tentando abrir o Free Fire...";
+ const link=document.createElement("a");
+ link.href="freefire://";
+ link.click();
+ setTimeout(()=>{
+  $("gameStatus").textContent="Se o jogo não abriu, o iOS pode não reconhecer esse endereço. Abra o Free Fire pelo ícone normal.";
+ },1800);
+};
+
+// TREINAMENTO
 let hits=0,time=30,running=false,interval=null,target=null;
+
 function spawnTarget(){
  if(!running)return;
  if(target)target.remove();
+
  target=document.createElement("button");
  target.className="target";
  target.setAttribute("aria-label","Alvo");
  const arena=$("arena");
- target.style.left=Math.random()*(arena.clientWidth-48)+"px";
- target.style.top=Math.random()*(arena.clientHeight-48)+"px";
+ const margin=27;
+ const x=margin+Math.random()*(arena.clientWidth-margin*2);
+ const y=margin+Math.random()*(arena.clientHeight-margin*2);
+ target.style.left=x+"px";
+ target.style.top=y+"px";
+
  target.onclick=()=>{
   if(!running)return;
   hits++;
@@ -290,32 +272,39 @@ function spawnTarget(){
  };
  arena.appendChild(target);
 }
-function stop(){
+function stopTraining(){
  running=false;
  clearInterval(interval);
+ interval=null;
  if(target)target.remove();
  target=null;
 }
 $("startTraining").onclick=()=>{
- stop();
- hits=0;time=30;running=true;
+ stopTraining();
+ hits=0;
+ time=30;
+ running=true;
  $("hits").textContent=hits;
  $("timer").textContent=time;
  $("trainingStatus").textContent="Treinamento em andamento!";
  spawnTarget();
+
  interval=setInterval(()=>{
   time--;
   $("timer").textContent=time;
   if(time<=0){
-   stop();
+   stopTraining();
    $("trainingStatus").textContent="Fim! Você acertou "+hits+" alvos.";
   }
  },1000);
 };
 $("stopTraining").onclick=()=>{
- stop();
+ stopTraining();
  $("trainingStatus").textContent="Treinamento pausado.";
 };
+
+renderHistory();
+renderProfiles();
 </script>
 </body>
 </html>
