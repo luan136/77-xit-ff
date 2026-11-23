@@ -3,274 +3,198 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-<title>77 XIT FF 5.0</title>
+<title>77 XIT FF 6.0</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090909;color:white;font-family:Arial}
-header{padding:22px;background:#191919;border-bottom:2px solid #e32636}
-.logo{font-size:30px;font-weight:900;color:#ff3045}
-.logo span{color:white}
-main{max-width:650px;margin:auto;padding:15px}
-.card{background:#1b1b1b;border:1px solid #383838;border-radius:14px;padding:16px;margin:14px 0}
-h2{font-size:19px}
-nav{display:flex;gap:8px;overflow:auto}
-nav button{background:#292929;color:white;border:0;padding:12px;border-radius:8px;white-space:nowrap}
-nav button.active,.action{background:#e32636;color:white}
-.page{display:none}
-.page.active{display:block}
-button{font:inherit;cursor:pointer}
-.action{border:0;border-radius:9px;padding:13px;font-weight:bold}
-.actions{display:flex;gap:9px}
-.actions button{flex:1}
-label{display:block;margin:14px 0 7px;color:#ddd}
-input,select{width:100%;padding:12px;background:#292929;color:white;border:1px solid #555;border-radius:8px}
-input[type=range]{padding:0;accent-color:#e32636}
-.value{color:#ff4655;font-weight:bold}
-.muted,small{color:#aaa}
-#arena{height:340px;background:#080808;border:2px solid #444;border-radius:12px;position:relative;overflow:hidden;touch-action:manipulation}
-.target{position:absolute;width:48px;height:48px;border-radius:50%;border:5px solid white;background:#ed2638;box-shadow:0 0 18px #ff263d;transform:translate(-50%,-50%);padding:0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{background:#292929;padding:12px;text-align:center;border-radius:9px}
-.stat strong{display:block;color:#ff4655;font-size:22px;margin-top:5px}
-footer{text-align:center;color:#777;padding:20px}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
+header{padding:25px 18px;text-align:center;background:linear-gradient(135deg,#240000,#090909);border-bottom:1px solid #ff3030}
+.logo{font-size:34px;font-weight:900;color:#ff3030;letter-spacing:3px}
+header p{color:#aaa;font-size:12px}
+main{padding:16px;max-width:600px;margin:auto}
+.card{background:#151515;border:1px solid #303030;border-radius:14px;padding:17px;margin-bottom:15px}
+h2{font-size:17px;margin:0 0 15px;color:#ff4545}
+button,select{width:100%;padding:13px;border:0;border-radius:9px;background:#e32323;color:white;font-weight:bold;font-size:14px;margin-top:9px}
+button:active{transform:scale(.98)}
+select{background:#292929}
+.stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:17px 0 7px}
+input[type=range]{width:100%;accent-color:#ff3030}
+.value{color:#ff4545;font-weight:bold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid button{margin:0}
+.secondary{background:#292929}
+.result{font-size:25px;font-weight:bold;text-align:center;color:#ff4545;padding:12px}
+footer{text-align:center;color:#666;font-size:11px;padding:20px}
 </style>
 </head>
 <body>
 <header>
- <div class="logo">77 <span>XIT FF</span></div>
- <small>THE 77 • TREINAMENTO 5.0</small>
+  <div class="logo">77 XIT FF</div>
+  <p>PAINEL AUXILIAR • VERSÃO 6.0</p>
 </header>
 
 <main>
-<div class="card">
- <h2>🎮 77 TREINAMENTO</h2>
- <p class="muted">Treine reflexo e precisão no seu iPhone.</p>
-</div>
+  <section class="card">
+    <h2>🎮 PERFIL DE JOGO</h2>
+    <select id="profile" onchange="loadProfile()">
+      <option value="padrao">Personalizado</option>
+      <option value="precisao">Precisão</option>
+      <option value="rapido">Movimentação rápida</option>
+      <option value="equilibrado">Equilibrado</option>
+    </select>
+    <p style="color:#999;font-size:12px">Escolha um perfil de referência para ajustar sua configuração manualmente.</p>
+  </section>
 
-<nav>
-<button class="active" data-page="home">Início</button>
-<button data-page="aim">Treino de mira</button>
-<button data-page="reflex">Reflexo</button>
-<button data-page="profiles">Perfis</button>
-</nav>
+  <section class="card">
+    <h2>🎯 SENSIBILIDADE</h2>
+    <div id="sliders"></div>
+    <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
+    <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
+    <p id="saved" style="color:#65df83;text-align:center;font-size:12px"></p>
+  </section>
 
-<section class="page active" id="home">
- <div class="card">
-  <h2>🏆 Seu desempenho</h2>
-  <div class="stats">
-   <div class="stat">Recorde<strong id="record">0</strong></div>
-   <div class="stat">Acertos<strong id="totalHits">0</strong></div>
-   <div class="stat">Partidas<strong id="games">0</strong></div>
-  </div>
- </div>
- <div class="card">
-  <h2>🎯 Escolha seu treinamento</h2>
-  <button class="action" style="width:100%" onclick="showPage('aim')">TREINO DE MIRA</button>
-  <br><br>
-  <button class="action" style="width:100%" onclick="showPage('reflex')">TESTE DE REFLEXO</button>
- </div>
-</section>
+  <section class="card">
+    <h2>⚡ TREINO DE REFLEXO</h2>
+    <p style="color:#aaa;font-size:13px">Toque no botão vermelho assim que ele aparecer. Treine sua velocidade de reação.</p>
+    <div class="result" id="reaction">-- ms</div>
+    <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
+    <p id="reactionInfo" style="text-align:center;color:#aaa;font-size:12px"></p>
+  </section>
 
-<section class="page" id="aim">
- <div class="card">
-  <h2>🎯 Treinamento de mira</h2>
-  <p class="muted">Acerte os alvos móveis em 30 segundos.</p>
-  <div class="stats">
-   <div class="stat">Acertos<strong id="hits">0</strong></div>
-   <div class="stat">Tempo<strong id="time">30</strong></div>
-   <div class="stat">Precisão<strong id="accuracy">0%</strong></div>
-  </div>
-  <br>
-  <div class="actions">
-   <button class="action" id="startAim">COMEÇAR</button>
-   <button class="action" id="stopAim">PARAR</button>
-  </div>
-  <br>
-  <div id="arena"></div>
-  <p id="aimStatus" class="value">Pronto para treinar!</p>
- </div>
-</section>
+  <section class="card">
+    <h2>🔴 TREINO DE TOQUE</h2>
+    <p style="color:#aaa;font-size:13px">Toque nos alvos que aparecem para praticar sua agilidade.</p>
+    <div class="result" id="score">0 pontos</div>
+    <button onclick="startTargets()">INICIAR TREINO</button>
+    <div id="targetArea" style="height:180px;position:relative;margin-top:12px;background:#090909;border-radius:10px;overflow:hidden"></div>
+  </section>
 
-<section class="page" id="reflex">
- <div class="card">
-  <h2>⚡ Teste de reflexo</h2>
-  <p class="muted">Espere a tela ficar verde e toque o mais rápido possível.</p>
-  <div id="reflexBox" style="height:180px;background:#333;border-radius:12px;display:grid;place-items:center;font-size:22px;text-align:center;padding:15px">
-   Aperte começar
-  </div>
-  <br>
-  <button class="action" id="startReflex" style="width:100%">COMEÇAR TESTE</button>
-  <p class="value" id="reflexResult">Seu tempo: --</p>
-  <p class="muted">Melhor tempo: <strong id="bestReflex">--</strong></p>
- </div>
-</section>
-
-<section class="page" id="profiles">
- <div class="card">
-  <h2>💾 Perfil THE 77</h2>
-  <label>Seu nome</label>
-  <input id="playerName" placeholder="Nome do jogador">
-  <button class="action" id="saveProfile" style="width:100%;margin-top:12px">SALVAR PERFIL</button>
-  <p id="profileStatus" class="value"></p>
-  <p class="muted" id="savedName">Nenhum jogador salvo.</p>
- </div>
-</section>
-
-<footer>77 XIT FF • THE 77</footer>
+  <section class="card">
+    <h2>📱 ATALHOS</h2>
+    <button class="secondary" onclick="copySettings()">COPIAR MINHA SENSIBILIDADE</button>
+    <p style="font-size:11px;color:#888">Use os valores como referência e configure manualmente dentro do jogo.</p>
+  </section>
 </main>
 
-<script>
-const $=id=>document.getElementById(id);
+<footer>77 XIT FF • Ferramenta auxiliar independente</footer>
 
-function showPage(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
- $(id).classList.add("active");
- document.querySelector(`[data-page="${id}"]`).classList.add("active");
+<script>
+const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
+const defaults=[90,85,80,75,50,70];
+let values=[...defaults];
+
+function renderSliders(){
+  document.getElementById("sliders").innerHTML=names.map((name,i)=>`
+    <div class="stat"><span>${name}</span><span class="value" id="v${i}">${values[i]}</span></div>
+    <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
+  `).join("");
 }
-document.querySelectorAll("nav button").forEach(b=>{
- b.onclick=()=>showPage(b.dataset.page);
+function changeValue(i,v){
+  values[i]=Number(v);
+  document.getElementById("v"+i).textContent=v;
+}
+function loadProfile(){
+  const p=document.getElementById("profile").value;
+  const profiles={
+    padrao:defaults,
+    precisao:[85,80,75,65,45,60],
+    rapido:[100,95,90,85,65,85],
+    equilibrado:[90,85,80,75,50,70]
+  };
+  values=[...profiles[p]];
+  renderSliders();
+  document.getElementById("saved").textContent="";
+}
+function saveConfig(){
+  localStorage.setItem("77config",JSON.stringify(values));
+  document.getElementById("saved").textContent="✓ Configuração salva neste aparelho!";
+}
+function resetConfig(){
+  values=[...defaults];
+  document.getElementById("profile").value="padrao";
+  renderSliders();
+  saveConfig();
+}
+function copySettings(){
+  const text=names.map((n,i)=>n+": "+values[i]).join("\n");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>alert("Sensibilidade copiada!")).catch(()=>alert(text));
+  }else alert(text);
+}
+
+let waiting=false,startTime=0,timer=null;
+function reactionGame(){
+  const btn=document.getElementById("reactionBtn");
+  const info=document.getElementById("reactionInfo");
+  if(waiting){
+    clearTimeout(timer);
+    waiting=false;
+    btn.style.background="#e32323";
+    btn.textContent="COMEÇAR TREINO";
+    info.textContent="Treino cancelado.";
+    return;
+  }
+  waiting=true;
+  btn.style.background="#777";
+  btn.textContent="ESPERE...";
+  info.textContent="Toque quando ficar verde!";
+  timer=setTimeout(()=>{
+    if(!waiting)return;
+    startTime=Date.now();
+    btn.style.background="#16a34a";
+    btn.textContent="TOQUE AGORA!";
+  },1000+Math.random()*3000);
+}
+document.getElementById("reactionBtn").addEventListener("click",()=>{
+  const btn=document.getElementById("reactionBtn");
+  if(btn.textContent==="TOQUE AGORA!"){
+    const ms=Date.now()-startTime;
+    document.getElementById("reaction").textContent=ms+" ms";
+    document.getElementById("reactionInfo").textContent="Boa! Tente melhorar seu tempo.";
+    waiting=false;
+    btn.style.background="#e32323";
+    btn.textContent="TENTAR NOVAMENTE";
+  }
 });
 
-let record=Number(localStorage.getItem("77record")||0);
-let totalHits=Number(localStorage.getItem("77totalHits")||0);
-let games=Number(localStorage.getItem("77games")||0);
-let bestReflex=Number(localStorage.getItem("77bestReflex")||0);
-
-function renderStats(){
- $("record").textContent=record;
- $("totalHits").textContent=totalHits;
- $("games").textContent=games;
- $("bestReflex").textContent=bestReflex?bestReflex+" ms":"--";
-}
-renderStats();
-
-// TREINO DE MIRA
-let hits=0,shots=0,time=30,running=false;
-let timer=null,movement=null,target=null;
-
-function spawnTarget(){
- if(!running)return;
- if(target)target.remove();
- target=document.createElement("button");
- target.className="target";
- const arena=$("arena");
- const margin=28;
- const x=margin+Math.random()*(arena.clientWidth-margin*2);
- const y=margin+Math.random()*(arena.clientHeight-margin*2);
- target.style.left=x+"px";
- target.style.top=y+"px";
- target.onclick=()=>{
-  if(!running)return;
-  hits++;
-  shots++;
-  totalHits++;
-  $("hits").textContent=hits;
-  $("accuracy").textContent=Math.round(hits/shots*100)+"%";
-  spawnTarget();
- };
- arena.appendChild(target);
-}
-function stopAim(){
- running=false;
- clearInterval(timer);
- clearInterval(movement);
- if(target)target.remove();
- target=null;
-}
-$("startAim").onclick=()=>{
- stopAim();
- hits=0;shots=0;time=30;running=true;
- $("hits").textContent=0;
- $("time").textContent=30;
- $("accuracy").textContent="0%";
- $("aimStatus").textContent="Treinamento em andamento!";
- spawnTarget();
-
- timer=setInterval(()=>{
-  time--;
-  $("time").textContent=time;
-  if(time<=0)finishAim();
- },1000);
-};
-function finishAim(){
- stopAim();
- games++;
- if(hits>record){
-  record=hits;
-  localStorage.setItem("77record",record);
- }
- totalHits+=0;
- localStorage.setItem("77totalHits",totalHits);
- localStorage.setItem("77games",games);
- renderStats();
- $("aimStatus").textContent="Fim! Você acertou "+hits+" alvos.";
-}
-$("stopAim").onclick=()=>{
- if(running){
-  finishAim();
-  $("aimStatus").textContent="Treinamento encerrado.";
- }
-};
-
-// TESTE DE REFLEXO
-let reflexState="idle",startTime=0,waitTimer=null;
-let reflexBest=bestReflex;
-
-$("reflexBox").onclick=()=>{
- if(reflexState==="waiting"){
-  clearTimeout(waitTimer);
-  reflexState="done";
-  const elapsed=Math.round(performance.now()-startTime);
-  $("reflexBox").style.background="#333";
-  $("reflexBox").textContent="Seu reflexo: "+elapsed+" ms";
-  $("reflexResult").textContent="Seu tempo: "+elapsed+" ms";
-  if(!reflexBest||elapsed<reflexBest){
-   reflexBest=elapsed;
-   bestReflex=elapsed;
-   localStorage.setItem("77bestReflex",bestReflex);
-   renderStats();
+let points=0,targetTimer=null;
+function startTargets(){
+  clearInterval(targetTimer);
+  points=0;
+  document.getElementById("score").textContent="0 pontos";
+  const area=document.getElementById("targetArea");
+  area.innerHTML="";
+  let count=0;
+  function target(){
+    area.innerHTML="";
+    const t=document.createElement("button");
+    t.textContent="●";
+    t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
+    t.style.left=Math.random()*(area.clientWidth-48)+"px";
+    t.style.top=Math.random()*(area.clientHeight-48)+"px";
+    t.onclick=()=>{
+      points++;
+      count++;
+      document.getElementById("score").textContent=points+" pontos";
+      if(count>=20){
+        clearInterval(targetTimer);
+        area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>Treino concluído!</p>";
+      }else target();
+    };
+    area.appendChild(t);
   }
- }else if(reflexState==="ready"){
-  $("reflexBox").textContent="Cedo demais! Tente novamente.";
-  $("reflexBox").style.background="#a22";
-  reflexState="done";
-  clearTimeout(waitTimer);
- }
-};
-
-$("startReflex").onclick=()=>{
- clearTimeout(waitTimer);
- reflexState="ready";
- $("reflexBox").style.background="#a22";
- $("reflexBox").textContent="Espere ficar verde...";
- const delay=1500+Math.random()*3500;
- waitTimer=setTimeout(()=>{
-  if(reflexState!=="ready")return;
-  reflexState="waiting";
-  $("reflexBox").style.background="#168b43";
-  $("reflexBox").textContent="TOQUE AGORA!";
-  startTime=performance.now();
- },delay);
-};
-
-$("saveProfile").onclick=()=>{
- const name=$("playerName").value.trim();
- if(!name){
-  $("profileStatus").textContent="Digite seu nome.";
-  return;
- }
- localStorage.setItem("77player",name);
- $("savedName").textContent="Jogador: "+name;
- $("profileStatus").textContent="Perfil salvo!";
-};
-const saved=localStorage.getItem("77player");
-if(saved){
- $("savedName").textContent="Jogador: "+saved;
- $("playerName").value=saved;
+  target();
+  targetTimer=setInterval(()=>{
+    if(count<20)target();
+  },1200);
 }
+
+try{
+  const saved=JSON.parse(localStorage.getItem("77config"));
+  if(Array.isArray(saved)&&saved.length===6)values=saved;
+}catch(e){}
+renderSliders();
 </script>
 </body>
 </html>
