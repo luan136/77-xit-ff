@@ -4,13 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#101010">
-<title>77 XIT FF 2.0</title>
+<meta name="theme-color" content="#090909">
+<title>77 XIT FF | THE 77</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101010;color:white;font-family:Arial}
-header{padding:22px;background:#191919;border-bottom:2px solid #e32636}
-.logo{font-size:32px;font-weight:900;color:#ff303f}
+body{margin:0;background:#090909;color:#fff;font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+#intro{position:fixed;inset:0;z-index:10;background:radial-gradient(circle,#361010,#090909 65%);display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
+.intro-content{width:100%;max-width:420px}
+.emblem{font-size:85px;font-weight:1000;color:#ff303f;text-shadow:0 0 35px #e32636;animation:pulse 2s infinite}
+@keyframes pulse{50%{transform:scale(1.07);text-shadow:0 0 55px #ff303f}}
+.intro-content h1{font-size:29px;margin:0}
+.intro-content p{color:#aaa;letter-spacing:3px;font-size:12px}
+.enter{width:100%;padding:17px;background:#e32636;border:0;border-radius:10px;color:white;font-weight:bold;margin-top:30px}
+#app{display:none}
+header{padding:20px;background:#171717;border-bottom:2px solid #e32636}
+.logo{font-size:29px;font-weight:1000;color:#ff303f}
 .logo span{color:white}
 header small{color:#aaa}
 main{max-width:650px;margin:auto;padding:15px}
@@ -19,7 +28,7 @@ nav button{background:#292929;color:white;border:0;padding:12px;border-radius:8p
 nav button.active{background:#e32636}
 .page{display:none}
 .page.active{display:block}
-.card{background:#1c1c1c;border:1px solid #333;border-radius:13px;padding:16px;margin-bottom:14px}
+.card{background:#191919;border:1px solid #333;border-radius:13px;padding:16px;margin-bottom:14px}
 h2{font-size:18px;margin-top:0}
 label{display:block;color:#ddd;margin:15px 0 7px}
 input,select{width:100%;background:#292929;color:white;border:1px solid #555;padding:12px;border-radius:8px}
@@ -31,14 +40,26 @@ button.action{background:#e32636;color:white;border:0;border-radius:8px;padding:
 small,.muted{color:#aaa}
 .item{padding:12px 0;border-bottom:1px solid #333}
 #arena{height:300px;background:#080808;border:1px solid #555;border-radius:12px;position:relative;overflow:hidden;touch-action:manipulation}
-.target{position:absolute;width:42px;height:42px;border-radius:50%;background:#f33;border:5px solid white;box-shadow:0 0 15px #f33}
+.target{position:absolute;width:42px;height:42px;border-radius:50%;background:#f33;border:5px solid white;box-shadow:0 0 15px #f33;padding:0}
 footer{text-align:center;color:#777;padding:20px}
 </style>
 </head>
 <body>
+
+<div id="intro">
+ <div class="intro-content">
+  <div class="emblem">77</div>
+  <h1>77 XIT FF</h1>
+  <p>THE 77 • ELITE GAMING</p>
+  <button class="enter" id="enter">ENTRAR NO PAINEL</button>
+  <p>PAINEL AUXILIAR DE CONFIGURAÇÕES</p>
+ </div>
+</div>
+
+<div id="app">
 <header>
  <div class="logo">77 <span>XIT FF</span></div>
- <small>PAINEL COMPLETO • VERSÃO 2.0</small>
+ <small>THE 77 • VERSÃO 3.0</small>
 </header>
 
 <main>
@@ -62,7 +83,6 @@ footer{text-align:center;color:#777;padding:20px}
 <option>Precisão</option>
 <option>Movimentação rápida</option>
 </select>
-<p class="muted">Ajustes de referência para configurar manualmente no jogo.</p>
 </div>
 </section>
 
@@ -72,10 +92,9 @@ footer{text-align:center;color:#777;padding:20px}
 <label>Valor atual</label>
 <input id="current" type="number" min="0" max="200" value="100">
 <label>Variação desejada (%)</label>
-<input id="variation" type="number" value="5" min="-100" max="100">
+<input id="variation" type="number" value="5">
 <button class="action" id="calculate" style="width:100%;margin-top:15px">CALCULAR</button>
 <h2 id="result" class="value">Novo valor: 100</h2>
-<small>Use o resultado como sugestão de ajuste manual.</small>
 </div>
 </section>
 
@@ -83,10 +102,10 @@ footer{text-align:center;color:#777;padding:20px}
 <div class="card">
 <h2>💾 Perfis personalizados</h2>
 <label>Nome do perfil</label>
-<input id="profileName" placeholder="Ex.: Minha configuração">
+<input id="profileName" placeholder="Minha configuração">
 <div class="actions" style="margin-top:12px">
-<button class="action" id="save">Salvar perfil</button>
-<button class="action" id="load">Carregar perfil</button>
+<button class="action" id="save">Salvar</button>
+<button class="action" id="load">Carregar</button>
 </div>
 <div id="profileList"></div>
 <p id="profileStatus" class="value"></p>
@@ -99,7 +118,7 @@ footer{text-align:center;color:#777;padding:20px}
 
 <section class="page" id="hist">
 <div class="card">
-<h2>📋 Histórico de ajustes</h2>
+<h2>📋 Histórico</h2>
 <div id="historyList" class="muted">Nenhum ajuste registrado.</div>
 <button class="action" id="clearHistory" style="margin-top:15px">Limpar histórico</button>
 </div>
@@ -108,7 +127,7 @@ footer{text-align:center;color:#777;padding:20px}
 <section class="page" id="treino">
 <div class="card">
 <h2>🎯 Treinamento de mira</h2>
-<p class="muted">Toque nos alvos que aparecem na tela e treine sua precisão.</p>
+<p class="muted">Toque nos alvos que aparecem na tela.</p>
 <div class="actions">
 <button class="action" id="startTraining">COMEÇAR</button>
 <button class="action" id="stopTraining">PARAR</button>
@@ -126,11 +145,17 @@ footer{text-align:center;color:#777;padding:20px}
 </div>
 <footer>77 XIT FF • THE 77</footer>
 </main>
+</div>
 
 <script>
-const defaults=[100,95,90,85,50,80];
-const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const $=id=>document.getElementById(id);
+$("enter").onclick=()=>{
+ $("intro").style.display="none";
+ $("app").style.display="block";
+};
+
+const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
+const defaults=[100,95,90,85,50,80];
 let history=JSON.parse(localStorage.getItem("77history")||"[]");
 let profiles=JSON.parse(localStorage.getItem("77profiles")||"{}");
 
@@ -138,9 +163,9 @@ names.forEach((name,i)=>{
  const div=document.createElement("div");
  div.innerHTML=`<label>${name}: <span class="value" id="v${i}">${defaults[i]}</span></label><input id="s${i}" type="range" min="0" max="200" value="${defaults[i]}">`;
  $("sliders").appendChild(div);
+ $("s"+i).addEventListener("change",record);
  $("s"+i).addEventListener("input",()=>{
   $("v"+i).textContent=$("s"+i).value;
-  record();
  });
 });
 
@@ -182,14 +207,16 @@ document.querySelectorAll("nav button").forEach(btn=>{
  };
 });
 $("calculate").onclick=()=>{
- let v=Number($("current").value);
- let pct=Number($("variation").value);
- if(!Number.isFinite(v)||!Number.isFinite(pct)){ $("result").textContent="Confira os valores.";return;}
- let result=Math.max(0,Math.min(200,Math.round(v*(1+pct/100))));
+ const v=Number($("current").value);
+ const pct=Number($("variation").value);
+ if(!Number.isFinite(v)||!Number.isFinite(pct)){
+  $("result").textContent="Confira os valores.";return;
+ }
+ const result=Math.max(0,Math.min(200,Math.round(v*(1+pct/100))));
  $("result").textContent="Novo valor: "+result;
 };
 $("save").onclick=()=>{
- let n=$("profileName").value.trim();
+ const n=$("profileName").value.trim();
  if(!n){$("profileStatus").textContent="Digite um nome.";return;}
  profiles[n]=config();
  localStorage.setItem("77profiles",JSON.stringify(profiles));
@@ -197,7 +224,7 @@ $("save").onclick=()=>{
  renderProfiles();
 };
 $("load").onclick=()=>{
- let n=$("profileName").value.trim();
+ const n=$("profileName").value.trim();
  if(!profiles[n]){$("profileStatus").textContent="Perfil não encontrado.";return;}
  apply(profiles[n]);
  $("profileStatus").textContent="Perfil carregado!";
@@ -206,7 +233,7 @@ $("load").onclick=()=>{
 $("share").onclick=async()=>{
  const data=JSON.stringify(config(),null,2);
  try{
-  if(navigator.share) await navigator.share({title:"77 XIT FF",text:data});
+  if(navigator.share)await navigator.share({title:"77 XIT FF",text:data});
   else if(navigator.clipboard){await navigator.clipboard.writeText(data);alert("Configuração copiada!");}
   else alert(data);
  }catch(e){}
@@ -230,7 +257,6 @@ $("clearHistory").onclick=()=>{
 renderHistory();
 renderProfiles();
 
-// TREINAMENTO
 let hits=0,time=30,running=false,interval=null,target=null;
 function spawnTarget(){
  if(!running)return;
