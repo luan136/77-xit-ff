@@ -1,11 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
-<title>77 XIT FF 8.1</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="77 XIT FF">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>77 XIT FF 8.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#050505;color:#fff;font-family:Arial,sans-serif}
@@ -48,6 +55,7 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
 .pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#333;color:#ddd;margin:3px}
 </style>
 </head>
+
 <body>
 
 <div id="intro">
@@ -57,7 +65,7 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
   <div class="sub">FREE FIRE EXPERIENCE</div>
   <p class="small">PREPARE-SE PARA JOGAR</p>
   <button class="enter" onclick="enterSite()">▶ ENTRAR NO PAINEL</button>
-  <p class="small">VERSION 8.1 ONLINE</p>
+  <p class="small">VERSION 8.2 ONLINE</p>
  </div>
 </div>
 
@@ -110,11 +118,18 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
 <section id="app">
 <header>
  <div class="logo">77 XIT FF</div>
- <p class="small">PAINEL AUXILIAR • VERSION 8.1 ONLINE</p>
+ <p class="small">PAINEL AUXILIAR • VERSION 8.2 ONLINE</p>
  <p id="welcome" class="small"></p>
 </header>
 
 <main>
+
+ <section class="card">
+  <h2>📰 NOVIDADES</h2>
+  <p class="small">Veja as atualizações e melhorias do 77 XIT FF.</p>
+  <button onclick="location.href='./novidades.html'">VER NOVIDADES</button>
+ </section>
+
  <section class="card" id="accessCard">
   <h2>🔐 STATUS DO ACESSO</h2>
   <p id="accessStatus" class="small">Verificando...</p>
@@ -184,6 +199,7 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
   <p id="account" class="small"></p>
   <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
  </section>
+
 </main>
 
 <footer>77 XIT FF • PAINEL AUXILIAR • Não modifica o Free Fire</footer>
@@ -528,6 +544,17 @@ function reactionGame(){
  const btn=$("reactionBtn");
 
  if(waiting){
+  if(btn.textContent==="TOQUE AGORA!"){
+   const elapsed=Date.now()-startTime;
+   $("reaction").textContent=elapsed+" ms";
+   $("reactionInfo").textContent="Muito bem! Tente novamente.";
+   waiting=false;
+   clearTimeout(timer);
+   btn.textContent="TENTAR NOVAMENTE";
+   btn.style.background="";
+   return;
+  }
+
   clearTimeout(timer);
   waiting=false;
   btn.textContent="COMEÇAR TREINO";
@@ -548,18 +575,6 @@ function reactionGame(){
   btn.style.background="#16a34a";
  },1000+Math.random()*3000);
 }
-
-$("reactionBtn").addEventListener("click",()=>{
- const btn=$("reactionBtn");
-
- if(btn.textContent==="TOQUE AGORA!"){
-  $("reaction").textContent=(Date.now()-startTime)+" ms";
-  $("reactionInfo").textContent="Muito bem! Tente novamente.";
-  waiting=false;
-  btn.textContent="TENTAR NOVAMENTE";
-  btn.style.background="";
- }
-});
 
 let count=0,targetTimer=null;
 
@@ -610,10 +625,16 @@ client.auth.onAuthStateChange((_event,session)=>{
  }
 });
 </script>
+
+<script>
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js")
+   .then(()=>console.log("77 XIT FF: aplicativo atualizado"))
+   .catch(error=>console.error("Erro no aplicativo:",error));
+ });
+}
+</script>
+
 </body>
 </html>
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="77 XIT FF">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
