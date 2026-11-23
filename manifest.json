@@ -1,0 +1,12 @@
+
+{
+  "name": "77 XIT FF",
+  "short_name": "77 XIT",
+  "description": "Painel auxiliar de configurações Free Fire",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#101010",
+  "theme_color": "#101010",
+  "orientation": "portrait",
+  "icons": []
+}
