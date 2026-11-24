@@ -7,92 +7,57 @@
 <meta name="theme-color" content="#050505">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="77 XIT FF">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>77 XIT FF 11.0</title>
+<title>77 XIT FF 12.0</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#050505;color:#fff;font-family:Arial,sans-serif}
-button,input,select{font:inherit}
-button{width:100%;padding:14px;border:0;border-radius:9px;background:linear-gradient(100deg,#850000,#f22);color:white;font-weight:bold;margin-top:10px;cursor:pointer}
-button:disabled{opacity:.55}
+body{margin:0;background:#050505;color:#fff;font-family:Arial}
+button,input,select,textarea{font:inherit}
+button{width:100%;padding:13px;border:0;border-radius:9px;background:linear-gradient(100deg,#850000,#f22);color:white;font-weight:bold;margin-top:9px}
 .secondary{background:#292929}
-input,select{width:100%;padding:14px;background:#202020;color:white;border:1px solid #444;border-radius:9px;margin:7px 0}
+input,select,textarea{width:100%;padding:12px;background:#202020;color:white;border:1px solid #444;border-radius:9px;margin:6px 0}
+textarea{min-height:70px}
 .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
-.panel{width:100%;max-width:460px;background:#111;border:1px solid #662020;border-radius:17px;padding:23px;box-shadow:0 0 35px #70000055}
-.logo{text-align:center;font-size:50px;font-weight:1000;letter-spacing:5px;color:#ff3030;text-shadow:0 0 15px red,0 0 35px #a00}
-.sub{text-align:center;color:#999;font-size:10px;letter-spacing:4px;margin:8px 0 25px}
-#intro{position:fixed;inset:0;z-index:20;background:radial-gradient(ellipse,#400000,#100000 45%,#020202);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-#intro:before,#intro:after{content:"";position:absolute;width:300px;height:300px;border:1px solid #f33;border-radius:50%;box-shadow:0 0 50px red;animation:pulse 4s infinite}
-#intro:after{width:500px;height:500px;animation-delay:1s;opacity:.3}
-@keyframes pulse{0%{transform:scale(.5);opacity:0}50%{opacity:.5}100%{transform:scale(1.5);opacity:0}}
-.particles{position:absolute;inset:0;background-image:radial-gradient(#ff3333 1px,transparent 1px);background-size:35px 35px;opacity:.3;animation:move 12s linear infinite}
-@keyframes move{to{background-position:100px -150px}}
-.introContent{position:relative;z-index:2;padding:20px;animation:appear 2s ease}
-@keyframes appear{from{opacity:0;transform:scale(.7);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
-#intro.hide{animation:exit .9s forwards}
-@keyframes exit{to{opacity:0;visibility:hidden;transform:scale(1.2)}}
-.enter{margin-top:40px;letter-spacing:2px;box-shadow:0 0 25px red}
-h2{font-size:17px;color:#ff4545;margin:0 0 15px}
-.small{text-align:center;color:#999;font-size:12px;line-height:1.5}
+.panel{width:100%;max-width:460px;background:#111;border:1px solid #662020;border-radius:17px;padding:22px}
+.logo{text-align:center;font-size:43px;font-weight:1000;letter-spacing:5px;color:#ff3030;text-shadow:0 0 18px red}
+.sub,.small{color:#999;text-align:center;font-size:11px;line-height:1.5}
+#intro{position:fixed;inset:0;z-index:20;background:radial-gradient(ellipse,#400000,#100000 50%,#020202);display:flex;align-items:center;justify-content:center;text-align:center}
 #auth,#app,#loading{display:none}
-header{text-align:center;padding:20px;background:linear-gradient(120deg,#280000,#080808);border-bottom:1px solid #8e1111}
-header .logo{font-size:32px}
-main{max-width:600px;margin:auto;padding:15px}
-.card{background:#141414;border:1px solid #333;border-radius:13px;padding:17px;margin-bottom:14px}
-.stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:15px 0 6px}
-.value{color:#ff4545}
-input[type=range]{padding:0;accent-color:red}
-.result{text-align:center;font-size:27px;color:#ff4040;font-weight:bold;padding:12px}
-#targetArea{height:180px;position:relative;background:#080808;border-radius:9px;overflow:hidden}
-footer{text-align:center;color:#666;font-size:11px;padding:20px}
-.message{min-height:20px;color:#ff7777;text-align:center;font-size:12px;line-height:1.5}
-.good{color:#75df91}
-.customer{border-bottom:1px solid #333;padding:10px 0;font-size:12px;overflow-wrap:anywhere}
-.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#333;color:#ddd;margin:3px}
-
-/* PERFIL */
+header{text-align:center;padding:18px;background:linear-gradient(120deg,#280000,#080808);border-bottom:1px solid #8e1111}
+header .logo{font-size:30px}
+main{max-width:650px;margin:auto;padding:14px}
+.card{background:#141414;border:1px solid #333;border-radius:13px;padding:16px;margin-bottom:13px}
+h2{font-size:17px;color:#ff4545;margin:0 0 12px}
+h3{font-size:14px;color:#ff7777}
+.message{min-height:18px;color:#ff7777;text-align:center;font-size:12px}
 .profileTop{text-align:center}
-.avatar{width:112px;height:112px;border-radius:50%;border:3px solid #f33;object-fit:cover;background:#222;display:block;margin:0 auto 12px}
-.profileName{font-size:21px;font-weight:bold;margin:8px 0}
-.profileId{font-size:11px;color:#aaa;overflow-wrap:anywhere}
-.profileInfo{background:#202020;border-radius:9px;padding:12px;margin:9px 0;font-size:12px;overflow-wrap:anywhere}
-.profileInfo span{color:#999;display:block;margin-bottom:5px}
-.profileInfo strong{color:#fff}
-.profileButtons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.profileButtons button{font-size:12px}
-#profileMessage{font-size:12px;text-align:center;min-height:18px;color:#75df91}
-
-/* RANKING 77 */
-.rankingPodium{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7px;align-items:end;margin:20px 0;text-align:center}
-.rankingPlace{background:#202020;border:1px solid #633;border-radius:10px;padding:12px 5px;overflow-wrap:anywhere;min-width:0}
-.rankingPlace.first{background:linear-gradient(#5b3900,#211500);border-color:#e5b323;padding-top:22px}
-.rankingPlace .medal{font-size:27px}
-.rankingPlace strong{display:block;font-size:12px;margin:7px 0}
-.rankingPlace small{color:#ff7777;font-size:11px}
-.rankingItem{display:flex;align-items:center;gap:10px;padding:12px 5px;border-bottom:1px solid #333}
-.rankingNumber{color:#ff4545;font-size:19px;font-weight:bold;min-width:27px}
-.rankingDetails{flex:1;min-width:0}
-.rankingDetails strong{display:block;overflow-wrap:anywhere}
-.rankingDetails small{color:#999;font-size:11px}
-.rankingPoints{color:#ff4545;font-weight:bold;white-space:nowrap}
-.rankingForm{background:#202020;padding:12px;border-radius:10px;margin-top:12px}
+.avatar{width:105px;height:105px;border-radius:50%;border:3px solid #f33;object-fit:cover;background:#222}
+.info,.item{background:#202020;border-radius:9px;padding:10px;margin:8px 0;font-size:12px;overflow-wrap:anywhere}
+.podium{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:6px;align-items:end;text-align:center;margin:16px 0}
+.place{background:#202020;border:1px solid #633;border-radius:9px;padding:12px 4px;overflow-wrap:anywhere}
+.place.first{border-color:#e5b323;background:#3b2908;padding-top:22px}
+.place strong{display:block;font-size:11px;margin:7px 0}
+.rrow{display:flex;gap:8px;align-items:center;border-bottom:1px solid #333;padding:10px 2px;font-size:12px}
+.rrow .details{flex:1;min-width:0}
+.rrow small{color:#999}
+.points{color:#ff4545;font-weight:bold}
+.stat{display:flex;justify-content:space-between;color:#bbb;font-size:13px;margin:12px 0 5px}
+input[type=range]{padding:0;accent-color:red}
+#targetArea{height:180px;position:relative;background:#080808;border-radius:9px;overflow:hidden}
+.result{text-align:center;font-size:25px;color:#f44;padding:10px}
+footer{text-align:center;color:#666;font-size:11px;padding:20px}
 </style>
 </head>
-
 <body>
 
 <div id="intro">
- <div class="particles"></div>
- <div class="introContent">
+ <div>
   <div class="logo">77 XIT</div>
   <div class="sub">FREE FIRE EXPERIENCE</div>
-  <p class="small">PREPARE-SE PARA JOGAR</p>
-  <button class="enter" onclick="enterSite()">▶ ENTRAR NO PAINEL</button>
-  <p class="small">VERSION 11.0 ONLINE</p>
+  <p class="small">CENTRAL 77 • VERSÃO 12.0</p>
+  <button onclick="enterSite()">ENTRAR NO PAINEL</button>
  </div>
 </div>
 
@@ -102,842 +67,641 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
   <div class="sub">ÁREA DE ACESSO ONLINE</div>
 
   <div id="loginBox">
-   <h2>🔐 ENTRAR NA CONTA</h2>
-   <input id="loginEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
-   <input id="loginPass" type="password" placeholder="Sua senha" autocomplete="current-password">
+   <h2>ENTRAR NA CONTA</h2>
+   <input id="loginEmail" type="email" placeholder="Seu e-mail">
+   <input id="loginPass" type="password" placeholder="Sua senha">
    <button onclick="login()">ENTRAR</button>
    <button class="secondary" onclick="showRegister()">CRIAR CONTA</button>
   </div>
 
   <div id="registerBox" style="display:none">
-   <h2>✨ CRIAR CONTA</h2>
-   <input id="newName" placeholder="Nome de usuário" maxlength="24" autocomplete="nickname">
-   <input id="newEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
-   <input id="newPass" type="password" placeholder="Crie uma senha (mínimo 8 caracteres)" autocomplete="new-password">
+   <h2>CRIAR CONTA</h2>
+   <input id="newName" placeholder="Nome de usuário" maxlength="24">
+   <input id="newEmail" type="email" placeholder="Seu e-mail">
+   <input id="newPass" type="password" placeholder="Senha (mínimo 8 caracteres)">
    <button onclick="register()">CADASTRAR</button>
    <button class="secondary" onclick="showLogin()">VOLTAR</button>
   </div>
 
   <div id="redeemBox" style="display:none">
-   <h2>🔑 ATIVAR ACESSO</h2>
-   <p class="small">Sua conta foi criada. Digite o código de acesso recebido após a confirmação do pagamento.</p>
-   <input id="accessCode" placeholder="Código de acesso" autocomplete="off">
-   <button onclick="redeemCode()">ATIVAR MEU ACESSO</button>
+   <h2>ATIVAR ACESSO</h2>
+   <input id="accessCode" placeholder="Código de acesso">
+   <button onclick="redeemCode()">ATIVAR</button>
    <button class="secondary" onclick="logout()">SAIR</button>
   </div>
-
   <p id="authMessage" class="message"></p>
-  <p class="small">Conta online • Acesso vinculado ao seu e-mail</p>
  </div>
 </section>
 
 <div id="loading" class="screen">
  <div class="panel">
   <div class="logo">77</div>
-  <h2 style="text-align:center">CARREGANDO...</h2>
-  <div style="height:8px;background:#333;border-radius:20px;overflow:hidden">
-   <div id="progress" style="height:100%;width:0;background:red"></div>
-  </div>
-  <p id="loadText" class="small">Verificando seu acesso</p>
+  <p class="small">Verificando acesso...</p>
  </div>
 </div>
 
 <section id="app">
 <header>
  <div class="logo">77 XIT FF</div>
- <p class="small">PAINEL AUXILIAR • VERSION 11.0 ONLINE</p>
+ <p class="small">CENTRAL 77 • VERSÃO 12.0</p>
  <p id="welcome" class="small"></p>
 </header>
 
 <main>
 
- <section class="card" id="playerProfile">
-  <h2>👤 MEU PERFIL</h2>
-  <div class="profileTop">
-   <img id="profileAvatar" class="avatar" alt="Foto do jogador">
-   <div class="profileName" id="profileDisplayName">Jogador 77</div>
-   <div class="profileId" id="profileDisplayId"></div>
-  </div>
+<section class="card">
+ <h2>👤 MEU PERFIL</h2>
+ <div class="profileTop">
+  <img id="avatar" class="avatar" alt="Foto">
+  <h3 id="displayName">Jogador 77</h3>
+  <small id="displayId"></small>
+ </div>
+ <input id="playerName" maxlength="24" placeholder="Nome do jogador">
+ <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+ <div class="info">E-mail: <b id="emailInfo"></b></div>
+ <div class="info">ID: <b id="idInfo"></b></div>
+ <div class="info">Cadastro: <b id="createdInfo"></b></div>
+ <div class="info">Acesso: <b id="accessInfo"></b></div>
+ <button onclick="saveProfile()">SALVAR PERFIL</button>
+ <p id="profileMsg" class="message"></p>
+</section>
 
-  <label for="profileNameInput">Nome do jogador</label>
-  <input id="profileNameInput" maxlength="24" placeholder="Seu nome de jogador">
+<section class="card">
+ <h2>🏆 RANKING 77</h2>
+ <p class="small">Vitória = 3 pontos • Eliminação = 1 ponto</p>
+ <div id="podium" class="podium"></div>
+ <div id="ranking"></div>
+ <button onclick="loadRanking()">ATUALIZAR RANKING</button>
+ <h3>Registrar resultado</h3>
+ <input id="rMatches" type="number" min="1" max="100" value="1" placeholder="Partidas">
+ <input id="rWins" type="number" min="0" max="100" value="0" placeholder="Vitórias">
+ <input id="rKills" type="number" min="0" max="1000" value="0" placeholder="Eliminações">
+ <button onclick="submitRanking()">ENVIAR RESULTADO</button>
+ <p id="rankMsg" class="message"></p>
+</section>
 
-  <label for="profilePhotoInput">Escolher foto de perfil</label>
-  <input id="profilePhotoInput" type="file" accept="image/jpeg,image/png,image/webp">
+<section class="card">
+ <h2>📜 HISTÓRICO DE PARTIDAS</h2>
+ <input id="hMatches" type="number" min="1" max="100" value="1" placeholder="Partidas">
+ <input id="hWins" type="number" min="0" max="100" value="0" placeholder="Vitórias">
+ <input id="hKills" type="number" min="0" max="1000" value="0" placeholder="Eliminações">
+ <input id="hNote" maxlength="120" placeholder="Observação opcional">
+ <button onclick="saveHistory()">SALVAR HISTÓRICO</button>
+ <p id="historyMsg" class="message"></p>
+ <div id="history"></div>
+</section>
 
-  <div class="profileInfo"><span>E-mail da conta</span><strong id="profileEmail">Carregando...</strong></div>
-  <div class="profileInfo"><span>ID exclusivo da conta</span><strong id="profileId">Carregando...</strong></div>
-  <div class="profileInfo"><span>Data de cadastro</span><strong id="profileCreated">Carregando...</strong></div>
-  <div class="profileInfo"><span>Situação do acesso</span><strong id="profileAccess">Verificando...</strong></div>
-  <div class="profileInfo"><span>Vencimento do acesso</span><strong id="profileExpiry">Não disponível</strong></div>
+<section class="card">
+ <h2>👥 EQUIPES 77</h2>
+ <input id="teamName" maxlength="30" placeholder="Nome da equipe">
+ <input id="teamDesc" maxlength="120" placeholder="Descrição">
+ <select id="teamFormat">
+  <option>4v4</option>
+  <option>6v6</option>
+ </select>
+ <button onclick="createTeam()">CRIAR EQUIPE</button>
+ <p id="teamMsg" class="message"></p>
+ <div id="teams"></div>
+</section>
 
-  <button onclick="savePlayerProfile()">SALVAR MEU PERFIL</button>
-  <p id="profileMessage"></p>
- </section>
+<section class="card">
+ <h2>⚔️ CONFRONTOS 4V4 E 6V6</h2>
+ <label>Equipe A</label>
+ <select id="teamA"></select>
+ <label>Equipe B</label>
+ <select id="teamB"></select>
+ <label>Formato</label>
+ <select id="fightFormat">
+  <option>4v4</option>
+  <option>6v6</option>
+ </select>
+ <label>Data e hora</label>
+ <input id="fightDate" type="datetime-local">
+ <button onclick="createFight()">AGENDAR CONFRONTO</button>
+ <p id="fightMsg" class="message"></p>
+ <div id="fights"></div>
+</section>
 
- <!-- RANKING 77 -->
- <section class="card" id="ranking77">
-  <h2>🏆 RANKING 77</h2>
-  <p class="small">Os jogadores mais bem colocados da comunidade.</p>
-
-  <div id="rankingPodium" class="rankingPodium">
-   <p class="small">Carregando ranking...</p>
-  </div>
-
-  <div id="rankingList"></div>
-
-  <button onclick="loadRanking77()">🔄 ATUALIZAR RANKING</button>
-
-  <div class="rankingForm">
-   <h2>🎮 REGISTRAR RESULTADO</h2>
-   <p class="small">Informe seus resultados reais de partidas.</p>
-
-   <label>Quantidade de partidas</label>
-   <input id="rankMatches" type="number" min="1" max="100" value="1">
-
-   <label>Vitórias</label>
-   <input id="rankWins" type="number" min="0" max="100" value="0">
-
-   <label>Eliminações</label>
-   <input id="rankKills" type="number" min="0" max="1000" value="0">
-
-   <button onclick="submitRanking77()">ENVIAR RESULTADO</button>
-   <p id="rankingMessage" class="message"></p>
-  </div>
- </section>
-
- <section class="card">
-  <h2>📊 ESTATÍSTICAS 9.0</h2>
-  <p class="small">Acompanhe partidas, vitórias, abates, K/D e conquistas.</p>
-  <button onclick="location.href='./estatisticas.html'">ABRIR MINHAS ESTATÍSTICAS</button>
- </section>
-
- <section class="card">
-  <h2>📰 NOVIDADES</h2>
-  <p class="small">Veja as atualizações e melhorias do 77 XIT FF.</p>
-  <button onclick="location.href='./novidades.html'">VER NOVIDADES</button>
- </section>
-
- <section class="card" id="accessCard">
-  <h2>🔐 STATUS DO ACESSO</h2>
-  <p id="accessStatus" class="small">Verificando...</p>
-  <div id="redeemInline" style="display:none">
-   <input id="inlineCode" placeholder="Digite seu código de acesso">
-   <button onclick="redeemInline()">ATIVAR ACESSO</button>
-  </div>
- </section>
-
- <section class="card">
-  <h2>🎮 PERFIL DE JOGO</h2>
-  <select id="profile" onchange="loadProfile()">
-   <option value="padrao">Personalizado</option>
-   <option value="precisao">Precisão</option>
-   <option value="rapido">Movimentação rápida</option>
-   <option value="equilibrado">Equilibrado</option>
+<section class="card">
+ <h2>🏅 CAMPEONATOS 77</h2>
+ <div id="championships"></div>
+ <div id="champAdmin" style="display:none">
+  <h3>CRIAR CAMPEONATO (ADMIN)</h3>
+  <input id="champName" maxlength="60" placeholder="Nome do campeonato">
+  <textarea id="champDesc" placeholder="Descrição e regras"></textarea>
+  <select id="champFormat">
+   <option>4v4</option>
+   <option>6v6</option>
   </select>
- </section>
+  <input id="champPrize" maxlength="120" placeholder="Premiação">
+  <button onclick="createChamp()">CRIAR CAMPEONATO</button>
+  <p id="champMsg" class="message"></p>
+ </div>
+</section>
 
- <section class="card">
-  <h2>🎯 SENSIBILIDADE</h2>
-  <div id="sliders"></div>
-  <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
-  <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
-  <p id="saved" class="small"></p>
- </section>
+<section class="card">
+ <h2>🥇 MEDALHAS E CONQUISTAS</h2>
+ <div id="achievements"></div>
+ <div id="awardAdmin" style="display:none">
+  <h3>CONCEDER MEDALHA (ADMIN)</h3>
+  <input id="awardId" placeholder="ID do jogador">
+  <input id="awardTitle" maxlength="50" placeholder="Título da conquista">
+  <input id="awardDesc" maxlength="120" placeholder="Descrição">
+  <select id="awardEmoji">
+   <option>🥇</option>
+   <option>🥈</option>
+   <option>🥉</option>
+   <option>🏆</option>
+   <option>🎯</option>
+   <option>⭐</option>
+  </select>
+  <button onclick="award()">CONCEDER MEDALHA</button>
+  <p id="awardMsg" class="message"></p>
+ </div>
+</section>
 
- <section class="card">
-  <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
-  <p class="small">Escolha um perfil de referência para ajustar manualmente.</p>
-  <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
-  <div id="configInfo" class="small"></div>
- </section>
+<section class="card">
+ <h2>📊 ESTATÍSTICAS</h2>
+ <button onclick="location.href='./estatisticas.html'">ABRIR ESTATÍSTICAS</button>
+</section>
 
- <section class="card">
-  <h2>⚡ TREINO DE REFLEXO</h2>
-  <p class="small">Toque quando o botão ficar verde.</p>
-  <div id="reaction" class="result">-- ms</div>
-  <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
-  <p id="reactionInfo" class="small"></p>
- </section>
+<section class="card">
+ <h2>📰 NOVIDADES</h2>
+ <button onclick="location.href='./novidades.html'">VER NOVIDADES</button>
+</section>
 
- <section class="card">
-  <h2>🔴 TREINO DE TOQUE</h2>
-  <p class="small">Acerte 20 alvos para concluir.</p>
-  <div id="score" class="result">0 pontos</div>
-  <button onclick="startTargets()">INICIAR TREINO</button>
-  <div id="targetArea"></div>
- </section>
+<section class="card">
+ <h2>🎮 PERFIL DE JOGO</h2>
+ <select id="profile" onchange="loadGameProfile()">
+  <option value="padrao">Personalizado</option>
+  <option value="precisao">Precisão</option>
+  <option value="rapido">Movimentação rápida</option>
+  <option value="equilibrado">Equilibrado</option>
+ </select>
+</section>
 
- <section class="card">
-  <h2>📱 MINHA CONFIGURAÇÃO</h2>
-  <button class="secondary" onclick="copySettings()">COPIAR SENSIBILIDADE</button>
- </section>
+<section class="card">
+ <h2>🎯 SENSIBILIDADE</h2>
+ <div id="sliders"></div>
+ <button onclick="saveConfig()">SALVAR CONFIGURAÇÃO</button>
+ <button class="secondary" onclick="resetConfig()">RESTAURAR PADRÃO</button>
+ <p id="saved" class="small"></p>
+</section>
 
- <section class="card" id="adminCard" style="display:none">
-  <h2>👑 ADMINISTRAÇÃO 77</h2>
-  <p class="small">Gere códigos de acesso de 30 dias e consulte as contas cadastradas.</p>
-  <button onclick="generateCode()">GERAR CÓDIGO DE 30 DIAS</button>
-  <p id="generatedCode" class="result" style="font-size:18px;overflow-wrap:anywhere"></p>
-  <button class="secondary" onclick="loadCustomers()">ATUALIZAR CLIENTES</button>
-  <div id="customerList"></div>
- </section>
+<section class="card">
+ <h2>🔎 PROCURAR CONFIGURAÇÕES</h2>
+ <button onclick="showConfigs()">PROCURAR CONFIGURAÇÕES</button>
+ <div id="configInfo" class="small"></div>
+</section>
 
- <section class="card">
-  <h2>👤 MINHA CONTA</h2>
-  <p id="account" class="small"></p>
-  <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
- </section>
+<section class="card">
+ <h2>⚡ TREINO DE REFLEXO</h2>
+ <div id="reaction" class="result">-- ms</div>
+ <button id="reactionBtn" onclick="reactionGame()">COMEÇAR TREINO</button>
+ <p id="reactionInfo" class="small"></p>
+</section>
+
+<section class="card">
+ <h2>🔴 TREINO DE TOQUE</h2>
+ <div id="score" class="result">0 pontos</div>
+ <button onclick="startTargets()">INICIAR TREINO</button>
+ <div id="targetArea"></div>
+</section>
+
+<section class="card" id="adminCard" style="display:none">
+ <h2>👑 ADMINISTRAÇÃO 77</h2>
+ <button onclick="generateCode()">GERAR CÓDIGO DE 30 DIAS</button>
+ <p id="generatedCode" class="result"></p>
+ <button onclick="loadCustomers()">ATUALIZAR CLIENTES</button>
+ <div id="customers"></div>
+</section>
+
+<section class="card">
+ <h2>👤 MINHA CONTA</h2>
+ <p id="account" class="small"></p>
+ <button class="secondary" onclick="logout()">SAIR DA CONTA</button>
+</section>
 
 </main>
-
-<footer>77 XIT FF 11.0 • PAINEL AUXILIAR • Não modifica o Free Fire</footer>
+<footer>77 XIT FF 12.0 • Painel auxiliar • Não modifica o Free Fire</footer>
 </section>
 
 <script>
 const SUPABASE_URL="https://dbjlnpxwselutqyqfoqz.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_TyD1EgLGw7q0jeDrdK73Jw_d_Ik-1vQ";
-const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const $=id=>document.getElementById(id);
-let currentUser=null,isAdmin=false,hasAccess=false;
-let currentProfilePhoto=null;
+let user=null,isAdmin=false,hasAccess=false,photoUrl=null;
+
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
 function showLogin(){
+ $("loginBox").style.display="block";
  $("registerBox").style.display="none";
  $("redeemBox").style.display="none";
- $("loginBox").style.display="block";
- $("authMessage").textContent="";
  $("auth").style.display="flex";
 }
-
 function showRegister(){
  $("loginBox").style.display="none";
- $("redeemBox").style.display="none";
  $("registerBox").style.display="block";
- $("authMessage").textContent="";
+ $("redeemBox").style.display="none";
+}
+async function enterSite(){
+ $("intro").style.display="none";
+ const {data:{session}}=await db.auth.getSession();
  $("auth").style.display="flex";
+ if(session)startSession(session.user);
+ else showLogin();
 }
-
-function enterSite(){
- $("intro").classList.add("hide");
- setTimeout(async()=>{
-  $("intro").style.display="none";
-  $("auth").style.display="flex";
-  const {data:{session}}=await client.auth.getSession();
-  if(session) await startSession(session.user);
-  else showLogin();
- },850);
-}
-
 async function register(){
- const name=$("newName").value.trim();
- const email=$("newEmail").value.trim().toLowerCase();
- const password=$("newPass").value;
- const msg=$("authMessage");
-
- if(!/^[a-zA-Z0-9_]{3,24}$/.test(name)){
-  msg.textContent="Use um nome com 3 a 24 caracteres: letras, números ou _.";
+ let name=$("newName").value.trim();
+ let email=$("newEmail").value.trim().toLowerCase();
+ let password=$("newPass").value;
+ if(!/^[a-zA-Z0-9_]{3,24}$/.test(name)||password.length<8){
+  $("authMessage").textContent="Confira nome (3-24 caracteres) e senha (mínimo 8).";
   return;
  }
- if(!email||!email.includes("@")){
-  msg.textContent="Digite um e-mail válido.";
-  return;
- }
- if(password.length<8){
-  msg.textContent="A senha precisa ter pelo menos 8 caracteres.";
-  return;
- }
-
- msg.textContent="Criando sua conta...";
-
- const {data,error}=await client.auth.signUp({
+ const {data,error}=await db.auth.signUp({
   email,password,options:{data:{username:name}}
  });
-
- if(error){
-  msg.textContent=error.message;
-  return;
- }
-
- if(data.session){
-  await startSession(data.user);
- }else{
+ if(error){$("authMessage").textContent=error.message;return;}
+ if(data.session)startSession(data.user);
+ else{
+  $("authMessage").textContent="Confirme seu e-mail e entre.";
   showLogin();
-  $("authMessage").textContent="Confira seu e-mail para confirmar o cadastro.";
  }
 }
-
 async function login(){
- const email=$("loginEmail").value.trim().toLowerCase();
- const password=$("loginPass").value;
- $("authMessage").textContent="Entrando...";
-
- const {data,error}=await client.auth.signInWithPassword({email,password});
-
- if(error){
-  $("authMessage").textContent="Não foi possível entrar: "+error.message;
-  return;
- }
- await startSession(data.user);
+ const {data,error}=await db.auth.signInWithPassword({
+  email:$("loginEmail").value.trim().toLowerCase(),
+  password:$("loginPass").value
+ });
+ if(error){$("authMessage").textContent=error.message;return;}
+ startSession(data.user);
 }
-
-async function startSession(user){
- currentUser=user;
+async function startSession(u){
+ user=u;
  $("auth").style.display="none";
  $("loading").style.display="flex";
- $("progress").style.width="35%";
- $("loadText").textContent="Verificando conta...";
-
- const {data:adminData,error:adminError}=await client.rpc("is_77_admin");
- isAdmin=!adminError&&adminData===true;
-
- const {data:accessData,error:accessError}=await client.rpc("check_77_access");
- hasAccess=!accessError&&accessData===true;
-
- $("progress").style.width="100%";
-
- setTimeout(async()=>{
-  $("loading").style.display="none";
-  const username=user.user_metadata?.username||user.email.split("@")[0];
-
-  if(!hasAccess&&!isAdmin){
-   $("app").style.display="none";
-   $("auth").style.display="flex";
-   $("loginBox").style.display="none";
-   $("registerBox").style.display="none";
-   $("redeemBox").style.display="block";
-   $("authMessage").textContent="Conta confirmada. Para liberar o painel, informe seu código de acesso.";
-   return;
-  }
-
-  $("auth").style.display="none";
-  $("app").style.display="block";
-  $("welcome").textContent="BEM-VINDO, "+username.toUpperCase();
-  $("account").textContent="E-mail: "+user.email;
-  $("adminCard").style.display=isAdmin?"block":"none";
-  $("accessStatus").innerHTML='<span class="good">✓ Acesso liberado</span>';
-  $("redeemInline").style.display="none";
-
-  loadSavedConfig();
-  await loadPlayerProfile();
-  await loadRanking77();
-  if(isAdmin)loadCustomers();
- },350);
+ const {data:a,error:ae}=await db.rpc("is_77_admin");
+ isAdmin=!ae&&a===true;
+ const {data:x,error:xe}=await db.rpc("check_77_access");
+ hasAccess=!xe&&x===true;
+ $("loading").style.display="none";
+ if(!hasAccess&&!isAdmin){
+  $("auth").style.display="flex";
+  $("loginBox").style.display="none";
+  $("registerBox").style.display="none";
+  $("redeemBox").style.display="block";
+  return;
+ }
+ $("app").style.display="block";
+ $("welcome").textContent="BEM-VINDO, "+(u.user_metadata?.username||u.email).toUpperCase();
+ $("account").textContent=u.email;
+ $("champAdmin").style.display=isAdmin?"block":"none";
+ $("awardAdmin").style.display=isAdmin?"block":"none";
+ $("adminCard").style.display=isAdmin?"block":"none";
+ loadSavedConfig();
+ await Promise.all([
+  loadPlayer(),loadRanking(),loadHistory(),loadTeams(),
+  loadFights(),loadChamps(),loadAwards()
+ ]);
+ if(isAdmin)loadCustomers();
 }
-
-/* PERFIL DO JOGADOR */
 
 function defaultAvatar(){
  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="100%" height="100%" fill="#222"/><circle cx="100" cy="75" r="38" fill="#777"/><path d="M25 200c5-55 35-75 75-75s70 20 75 75" fill="#777"/></svg>'
  );
 }
-
-async function loadPlayerProfile(){
- if(!currentUser)return;
-
- $("profileEmail").textContent=currentUser.email||"Não disponível";
- $("profileId").textContent=currentUser.id;
- $("profileDisplayId").textContent="ID: "+currentUser.id;
- $("profileCreated").textContent=currentUser.created_at
-  ?new Date(currentUser.created_at).toLocaleDateString("pt-BR")
-  :"Não disponível";
-
- $("profileAccess").textContent=hasAccess||isAdmin?"Ativo":"Sem acesso";
- $("profileExpiry").textContent="Consulte a área de acesso";
- $("profileAvatar").src=defaultAvatar();
-
- const metadataName=currentUser.user_metadata?.username||"Jogador 77";
- $("profileNameInput").value=metadataName;
- $("profileDisplayName").textContent=metadataName;
-
- const {data,error}=await client
-  .from("perfis_jogadores")
-  .select("nome_jogador,foto_url")
-  .eq("user_id",currentUser.id)
-  .maybeSingle();
-
- if(error){
-  $("profileMessage").textContent="Não foi possível carregar o perfil: "+error.message;
-  return;
- }
-
+async function loadPlayer(){
+ $("emailInfo").textContent=user.email;
+ $("idInfo").textContent=user.id;
+ $("displayId").textContent="ID: "+user.id;
+ $("createdInfo").textContent=new Date(user.created_at).toLocaleDateString("pt-BR");
+ $("accessInfo").textContent=hasAccess||isAdmin?"Ativo":"Sem acesso";
+ $("avatar").src=defaultAvatar();
+ let fallback=user.user_metadata?.username||"Jogador 77";
+ $("playerName").value=fallback;
+ $("displayName").textContent=fallback;
+ const {data,error}=await db.from("perfis_jogadores")
+  .select("nome_jogador,foto_url").eq("user_id",user.id).maybeSingle();
+ if(error){$("profileMsg").textContent=error.message;return;}
  if(data){
-  $("profileNameInput").value=data.nome_jogador||metadataName;
-  $("profileDisplayName").textContent=data.nome_jogador||metadataName;
-  if(data.foto_url){
-   currentProfilePhoto=data.foto_url;
-   $("profileAvatar").src=data.foto_url;
-  }
- }
-
- const {data:accessInfo,error:accessInfoError}=await client
-  .from("user_access")
-  .select("active,expires_at")
-  .eq("user_id",currentUser.id)
-  .maybeSingle();
-
- if(!accessInfoError&&accessInfo){
-  $("profileAccess").textContent=accessInfo.active?"Ativo":"Inativo";
-  $("profileExpiry").textContent=accessInfo.expires_at
-   ?new Date(accessInfo.expires_at).toLocaleString("pt-BR")
-   :"Sem data registrada";
+  $("playerName").value=data.nome_jogador||fallback;
+  $("displayName").textContent=data.nome_jogador||fallback;
+  if(data.foto_url){photoUrl=data.foto_url;$("avatar").src=photoUrl;}
  }
 }
-
-async function savePlayerProfile(){
- if(!currentUser){
-  alert("Entre na sua conta primeiro.");
-  return;
- }
-
- const name=$("profileNameInput").value.trim();
-
- if(name.length<3||name.length>24){
-  $("profileMessage").textContent="O nome precisa ter entre 3 e 24 caracteres.";
-  return;
- }
-
- $("profileMessage").textContent="Salvando perfil...";
- let photoUrl=currentProfilePhoto;
- const file=$("profilePhotoInput").files[0];
-
- if(file){
-  const allowed=["image/jpeg","image/png","image/webp"];
-  if(!allowed.includes(file.type)){
-   $("profileMessage").textContent="Escolha uma imagem JPG, PNG ou WEBP.";
-   return;
-  }
-  if(file.size>2*1024*1024){
-   $("profileMessage").textContent="A foto deve ter no máximo 2 MB.";
-   return;
-  }
-
-  const extension=file.type==="image/png"?"png":
-   file.type==="image/webp"?"webp":"jpg";
-  const path=currentUser.id+"/"+Date.now()+"."+extension;
-
-  const {error:uploadError}=await client.storage
-   .from("fotos-perfis")
-   .upload(path,file,{upsert:true,contentType:file.type});
-
-  if(uploadError){
-   $("profileMessage").textContent="Erro ao enviar foto: "+uploadError.message;
-   return;
-  }
-
-  const {data:publicData}=client.storage
-   .from("fotos-perfis")
-   .getPublicUrl(path);
-  photoUrl=publicData.publicUrl;
- }
-
- const {error:profileError}=await client
-  .from("perfis_jogadores")
-  .upsert({
-   user_id:currentUser.id,
-   nome_jogador:name,
-   foto_url:photoUrl,
-   updated_at:new Date().toISOString()
-  },{onConflict:"user_id"});
-
- if(profileError){
-  $("profileMessage").textContent="Erro ao salvar perfil: "+profileError.message;
-  return;
- }
-
- const {data:updatedUser,error:metadataError}=await client.auth.updateUser({
-  data:{username:name}
- });
-
- if(!metadataError&&updatedUser?.user)currentUser=updatedUser.user;
-
- currentProfilePhoto=photoUrl;
- $("profileDisplayName").textContent=name;
- $("profileAvatar").src=photoUrl||defaultAvatar();
- $("welcome").textContent="BEM-VINDO, "+name.toUpperCase();
- $("profileMessage").textContent="✓ Perfil salvo com sucesso!";
- $("profilePhotoInput").value="";
-}
-
-$("profilePhotoInput").addEventListener("change",()=>{
- const file=$("profilePhotoInput").files[0];
- if(!file)return;
-
- if(file.size>2*1024*1024){
-  $("profileMessage").textContent="A foto deve ter no máximo 2 MB.";
-  $("profilePhotoInput").value="";
-  return;
- }
-
- const reader=new FileReader();
- reader.onload=()=>{$("profileAvatar").src=reader.result};
- reader.readAsDataURL(file);
+$("photo").addEventListener("change",()=>{
+ let f=$("photo").files[0];if(!f)return;
+ if(f.size>2*1024*1024){$("profileMsg").textContent="Foto deve ter até 2 MB";return;}
+ let r=new FileReader();r.onload=()=>$("avatar").src=r.result;r.readAsDataURL(f);
 });
-
-/* RANKING 77 */
-
-async function loadRanking77(){
- const podium=$("rankingPodium");
- const list=$("rankingList");
-
- podium.innerHTML='<p class="small">Carregando ranking...</p>';
- list.innerHTML="";
-
- const {data,error}=await client.rpc("listar_ranking_77");
-
- if(error){
-  podium.innerHTML="";
-  list.textContent="Erro ao carregar ranking: "+error.message;
-  return;
+async function saveProfile(){
+ let name=$("playerName").value.trim(),f=$("photo").files[0];
+ if(name.length<3||name.length>24){$("profileMsg").textContent="Nome deve ter de 3 a 24 caracteres.";return;}
+ if(f){
+  if(!["image/jpeg","image/png","image/webp"].includes(f.type)||f.size>2*1024*1024){
+   $("profileMsg").textContent="Use JPG, PNG ou WEBP até 2 MB.";return;
+  }
+  let ext=f.type==="image/png"?"png":f.type==="image/webp"?"webp":"jpg";
+  let path=user.id+"/"+Date.now()+"."+ext;
+  let {error}=await db.storage.from("fotos-perfis").upload(path,f,{upsert:true,contentType:f.type});
+  if(error){$("profileMsg").textContent=error.message;return;}
+  photoUrl=db.storage.from("fotos-perfis").getPublicUrl(path).data.publicUrl;
  }
-
- const players=data||[];
-
- if(players.length===0){
-  podium.innerHTML='<p class="small">Ainda não existem resultados registrados.</p>';
-  return;
- }
-
- const medals=["🥇","🥈","🥉"];
- const positions=[1,0,2];
-
- podium.innerHTML=positions.map(index=>{
-  const p=players[index];
-  if(!p)return '<div></div>';
-
-  return `
-   <div class="rankingPlace ${index===0?"first":""}">
-    <div class="medal">${medals[index]}</div>
-    <strong>${escapeHtml(p.nome_jogador||"Jogador 77")}</strong>
-    <small>${p.pontos} pontos</small>
-   </div>
-  `;
- }).join("");
-
- list.innerHTML=players.map((p,index)=>`
-  <div class="rankingItem">
-   <div class="rankingNumber">${index+1}º</div>
-   <div class="rankingDetails">
-    <strong>${escapeHtml(p.nome_jogador||"Jogador 77")}</strong>
-    <small>${p.partidas} partidas • ${p.vitorias} vitórias • ${p.eliminacoes} eliminações</small>
-   </div>
-   <div class="rankingPoints">${p.pontos} pts</div>
-  </div>
- `).join("");
+ let {error}=await db.from("perfis_jogadores").upsert({
+  user_id:user.id,nome_jogador:name,foto_url:photoUrl,
+  updated_at:new Date().toISOString()
+ },{onConflict:"user_id"});
+ if(error){$("profileMsg").textContent=error.message;return;}
+ await db.auth.updateUser({data:{username:name}});
+ $("displayName").textContent=name;
+ $("welcome").textContent="BEM-VINDO, "+name.toUpperCase();
+ $("avatar").src=photoUrl||defaultAvatar();
+ $("profileMsg").textContent="Perfil salvo!";
 }
-
-async function submitRanking77(){
- const matches=Number($("rankMatches").value);
- const wins=Number($("rankWins").value);
- const kills=Number($("rankKills").value);
- const msg=$("rankingMessage");
-
- if(!currentUser){
-  msg.textContent="Entre na sua conta primeiro.";
-  return;
- }
-
- if(!Number.isInteger(matches)||matches<1||matches>100||
-    !Number.isInteger(wins)||wins<0||wins>matches||
-    !Number.isInteger(kills)||kills<0||kills>1000){
-  msg.textContent="Confira os números informados.";
-  return;
- }
-
- msg.textContent="Enviando resultado...";
-
- const {error}=await client.from("resultados_77").insert({
-  user_id:currentUser.id,
-  partidas:matches,
-  vitorias:wins,
-  eliminacoes:kills
- });
-
- if(error){
-  msg.textContent="Erro ao enviar: "+error.message;
-  return;
- }
-
- msg.textContent="✓ Resultado registrado!";
- $("rankMatches").value=1;
- $("rankWins").value=0;
- $("rankKills").value=0;
-
- await loadRanking77();
-}
-
-/* CÓDIGOS DE ACESSO */
 
 async function redeemCode(){
- const code=$("accessCode").value.trim();
-
- if(!code){
-  $("authMessage").textContent="Digite o código recebido.";
-  return;
- }
-
- $("authMessage").textContent="Validando código...";
- const {data,error}=await client.rpc("redeem_77_code",{p_code:code});
-
- if(error){
-  $("authMessage").textContent="Não foi possível ativar: "+error.message;
-  return;
- }
-
- if(data===true){
-  $("authMessage").textContent="Código ativado!";
-  await startSession(currentUser);
- }else{
-  $("authMessage").textContent="Código inválido, expirado ou já utilizado.";
- }
+ let {data,error}=await db.rpc("redeem_77_code",{p_code:$("accessCode").value.trim()});
+ if(error){$("authMessage").textContent=error.message;return;}
+ if(data===true)startSession(user);
+ else $("authMessage").textContent="Código inválido ou expirado.";
 }
-
-async function redeemInline(){
- const code=$("inlineCode").value.trim();
- if(!code){alert("Digite o código de acesso.");return;}
-
- const {data,error}=await client.rpc("redeem_77_code",{p_code:code});
-
- if(error){alert("Erro ao ativar: "+error.message);return;}
-
- if(data===true){
-  alert("Acesso ativado!");
-  await startSession(currentUser);
- }else{
-  alert("Código inválido, expirado ou já utilizado.");
- }
-}
-
 async function logout(){
- await client.auth.signOut();
- currentUser=null;
- isAdmin=false;
- hasAccess=false;
- currentProfilePhoto=null;
-
- $("app").style.display="none";
- $("loading").style.display="none";
- $("intro").style.display="flex";
- $("intro").classList.remove("hide");
- $("loginPass").value="";
- showLogin();
+ await db.auth.signOut();user=null;isAdmin=false;hasAccess=false;
+ $("app").style.display="none";$("intro").style.display="flex";showLogin();
 }
 
+/* RANKING */
+async function loadRanking(){
+ let {data,error}=await db.rpc("listar_ranking_77");
+ if(error){$("ranking").textContent=error.message;return;}
+ let p=data||[];
+ if(!p.length){
+  $("podium").innerHTML='<p class="small">Ainda sem resultados.</p>';
+  $("ranking").innerHTML="";return;
+ }
+ let order=[1,0,2],medals=["🥇","🥈","🥉"];
+ $("podium").innerHTML=order.map(i=>p[i]?
+  `<div class="place ${i===0?"first":""}"><div>${medals[i]}</div><strong>${esc(p[i].nome_jogador)}</strong><small>${p[i].pontos} pts</small></div>`:
+  "<div></div>").join("");
+ $("ranking").innerHTML=p.map((v,i)=>`
+  <div class="rrow"><b>${i+1}º</b>
+   <div class="details"><b>${esc(v.nome_jogador)}</b><br>
+   <small>${v.partidas} partidas • ${v.vitorias} vitórias • ${v.eliminacoes} eliminações</small></div>
+   <b class="points">${v.pontos} pts</b>
+  </div>`).join("");
+}
+async function submitRanking(){
+ let m=+$("rMatches").value,w=+$("rWins").value,k=+$("rKills").value;
+ if(!Number.isInteger(m)||m<1||m>100||!Number.isInteger(w)||w<0||w>m||!Number.isInteger(k)||k<0||k>1000){
+  $("rankMsg").textContent="Confira os valores.";return;
+ }
+ let {error}=await db.from("resultados_77").insert({
+  user_id:user.id,partidas:m,vitorias:w,eliminacoes:k
+ });
+ if(error){$("rankMsg").textContent=error.message;return;}
+ $("rankMsg").textContent="Resultado registrado!";
+ await loadRanking();
+}
+
+/* HISTÓRICO */
+async function saveHistory(){
+ let m=+$("hMatches").value,w=+$("hWins").value,k=+$("hKills").value;
+ if(!Number.isInteger(m)||m<1||m>100||!Number.isInteger(w)||w<0||w>m||!Number.isInteger(k)||k<0||k>1000){
+  $("historyMsg").textContent="Confira os valores.";return;
+ }
+ let {error}=await db.from("historico_partidas_77").insert({
+  user_id:user.id,partidas:m,vitorias:w,eliminacoes:k,
+  observacao:$("hNote").value.trim()||null
+ });
+ if(error){$("historyMsg").textContent=error.message;return;}
+ $("historyMsg").textContent="Histórico salvo!";
+ await loadHistory();
+}
+async function loadHistory(){
+ let {data,error}=await db.from("historico_partidas_77")
+  .select("*").eq("user_id",user.id).order("created_at",{ascending:false}).limit(30);
+ if(error){$("history").textContent=error.message;return;}
+ $("history").innerHTML=(data||[]).map(v=>`
+  <div class="item">${new Date(v.created_at).toLocaleString("pt-BR")}<br>
+  ${v.partidas} partidas • ${v.vitorias} vitórias • ${v.eliminacoes} eliminações<br>
+  ${esc(v.observacao)}</div>`).join("")||'<p class="small">Nenhuma partida registrada.</p>';
+}
+
+/* EQUIPES */
+async function createTeam(){
+ let n=$("teamName").value.trim();
+ if(n.length<3||n.length>30){$("teamMsg").textContent="Nome de 3 a 30 caracteres.";return;}
+ let {data,error}=await db.from("equipes_77").insert({
+  nome:n,descricao:$("teamDesc").value.trim()||null,
+  formato:$("teamFormat").value,owner_id:user.id
+ }).select().single();
+ if(error){$("teamMsg").textContent=error.message;return;}
+ let {error:e}=await db.from("equipe_jogadores_77").insert({
+  equipe_id:data.id,user_id:user.id,funcao:"lider"
+ });
+ $("teamMsg").textContent=e?"Equipe criada, mas erro ao registrar líder: "+e.message:"Equipe criada!";
+ await loadTeams();
+}
+async function loadTeams(){
+ let {data,error}=await db.from("equipes_77").select("*").order("created_at",{ascending:false});
+ if(error){$("teams").textContent=error.message;return;}
+ let t=data||[];
+ $("teams").innerHTML=t.map(v=>`
+  <div class="item"><b>${esc(v.nome)}</b> • ${v.formato}<br>
+  ${esc(v.descricao)}<br><small>ID ${v.id}</small>
+  <button onclick="joinTeam(${v.id})">ENTRAR NA EQUIPE</button></div>`).join("")||'<p class="small">Nenhuma equipe ainda.</p>';
+ let opts=t.map(v=>`<option value="${v.id}">${esc(v.nome)}</option>`).join("");
+ $("teamA").innerHTML=opts;$("teamB").innerHTML=opts;
+}
+async function joinTeam(id){
+ let {error}=await db.from("equipe_jogadores_77").insert({
+  equipe_id:id,user_id:user.id,funcao:"jogador"
+ });
+ alert(error?(error.code==="23505"?"Você já participa desta equipe.":error.message):"Você entrou na equipe!");
+}
+
+/* CONFRONTOS */
+async function createFight(){
+ let a=+$("teamA").value,b=+$("teamB").value;
+ if(!a||!b||a===b){$("fightMsg").textContent="Escolha duas equipes diferentes.";return;}
+ let d=$("fightDate").value;
+ let {error}=await db.from("confrontos_77").insert({
+  equipe_a_id:a,equipe_b_id:b,formato:$("fightFormat").value,
+  data_confronto:d?new Date(d).toISOString():null,criado_por:user.id
+ });
+ if(error){$("fightMsg").textContent=error.message;return;}
+ $("fightMsg").textContent="Confronto agendado!";
+ await loadFights();
+}
+async function loadFights(){
+ let {data,error}=await db.from("confrontos_77").select("*")
+  .order("created_at",{ascending:false}).limit(50);
+ if(error){$("fights").textContent=error.message;return;}
+ let {data:t}=await db.from("equipes_77").select("id,nome");
+ let map=Object.fromEntries((t||[]).map(v=>[v.id,v.nome]));
+ $("fights").innerHTML=(data||[]).map(v=>`
+  <div class="item"><b>${esc(map[v.equipe_a_id]||"Equipe A")} × ${esc(map[v.equipe_b_id]||"Equipe B")}</b><br>
+  ${v.formato} • ${v.data_confronto?new Date(v.data_confronto).toLocaleString("pt-BR"):"Data a definir"}<br>
+  Status: ${esc(v.status)}</div>`).join("")||'<p class="small">Nenhum confronto.</p>';
+}
+
+/* CAMPEONATOS */
+async function createChamp(){
+ if(!isAdmin)return;
+ let n=$("champName").value.trim();
+ if(n.length<3){$("champMsg").textContent="Informe o nome.";return;}
+ let {error}=await db.from("campeonatos_77").insert({
+  nome:n,descricao:$("champDesc").value.trim()||null,
+  formato:$("champFormat").value,premiacao:$("champPrize").value.trim()||null,
+  criado_por:user.id
+ });
+ if(error){$("champMsg").textContent=error.message;return;}
+ $("champMsg").textContent="Campeonato criado!";
+ await loadChamps();
+}
+async function loadChamps(){
+ let {data,error}=await db.from("campeonatos_77").select("*").order("created_at",{ascending:false});
+ if(error){$("championships").textContent=error.message;return;}
+ let {data:t}=await db.from("equipes_77").select("id,nome");
+ let opts=(t||[]).map(v=>`<option value="${v.id}">${esc(v.nome)}</option>`).join("");
+ $("championships").innerHTML=(data||[]).map(c=>`
+  <div class="item"><b>${esc(c.nome)}</b> • ${c.formato}<br>
+  ${esc(c.descricao)}<br>Premiação: ${esc(c.premiacao||"A definir")}<br>
+  Status: ${esc(c.status)}
+  ${c.status==="inscricoes_abertas"?`<select id="entry${c.id}">${opts}</select><button onclick="joinChamp(${c.id})">INSCREVER EQUIPE</button>`:""}
+  </div>`).join("")||'<p class="small">Nenhum campeonato cadastrado.</p>';
+}
+async function joinChamp(id){
+ let team=+$("entry"+id).value;
+ if(!team){alert("Crie uma equipe primeiro.");return;}
+ let {error}=await db.from("inscricoes_campeonatos_77").insert({campeonato_id:id,equipe_id:team});
+ alert(error?(error.code==="23505"?"Equipe já inscrita.":error.message):"Inscrição realizada!");
+}
+
+/* MEDALHAS */
+async function award(){
+ let uid=$("awardId").value.trim(),title=$("awardTitle").value.trim();
+ if(!uid||!title){$("awardMsg").textContent="Informe ID e título.";return;}
+ let {error}=await db.from("conquistas_77").insert({
+  user_id:uid,titulo:title,descricao:$("awardDesc").value.trim()||null,
+  medalha:$("awardEmoji").value,concedido_por:user.id
+ });
+ $("awardMsg").textContent=error?error.message:"Medalha concedida!";
+ if(!error)loadAwards();
+}
+async function loadAwards(){
+ let {data,error}=await db.from("conquistas_77").select("*")
+  .eq("user_id",user.id).order("created_at",{ascending:false});
+ if(error){$("achievements").textContent=error.message;return;}
+ $("achievements").innerHTML=(data||[]).map(v=>`
+  <div class="item"><b>${esc(v.medalha)} ${esc(v.titulo)}</b><br>
+  ${esc(v.descricao)}<br><small>${new Date(v.created_at).toLocaleDateString("pt-BR")}</small></div>`).join("")||'<p class="small">Você ainda não recebeu medalhas.</p>';
+}
+
+/* ADMINISTRAÇÃO */
 async function generateCode(){
- $("generatedCode").textContent="Gerando...";
- const {data,error}=await client.rpc("generate_77_code");
-
- if(error){
-  $("generatedCode").textContent="Erro: "+error.message;
-  return;
- }
-
- const code=typeof data==="string"?data:(data?.code||JSON.stringify(data));
- $("generatedCode").textContent=code;
-
- try{
-  await navigator.clipboard.writeText(code);
-  $("generatedCode").textContent=code+" (copiado)";
- }catch(e){}
+ let {data,error}=await db.rpc("generate_77_code");
+ $("generatedCode").textContent=error?error.message:(typeof data==="string"?data:(data?.code||JSON.stringify(data)));
 }
-
 async function loadCustomers(){
- $("customerList").innerHTML='<p class="small">Carregando clientes...</p>';
- const {data,error}=await client.rpc("list_77_customers");
-
- if(error){
-  $("customerList").textContent="Erro ao carregar: "+error.message;
-  return;
- }
-
- if(!data||!data.length){
-  $("customerList").innerHTML='<p class="small">Nenhum cliente com acesso encontrado.</p>';
-  return;
- }
-
- $("customerList").innerHTML=data.map(c=>{
-  const expiry=c.expires_at?new Date(c.expires_at).toLocaleString("pt-BR"):"Sem data";
-  return `<div class="customer">
-   <b>${escapeHtml(c.email||c.user_id||"Conta")}</b><br>
-   <span class="pill">${c.active?"Ativo":"Inativo"}</span><br>
-   Expira: ${escapeHtml(expiry)}
-  </div>`;
- }).join("");
-}
-
-function escapeHtml(v){
- return String(v).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+ let {data,error}=await db.rpc("list_77_customers");
+ $("customers").innerHTML=error?esc(error.message):(data||[]).map(v=>`
+  <div class="item">${esc(v.email||v.user_id)} • ${v.active?"Ativo":"Inativo"}<br>
+  Expira: ${esc(v.expires_at||"Sem data")}</div>`).join("");
 }
 
 /* SENSIBILIDADE */
-
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[90,85,80,75,50,70];
 let values=[...defaults];
-
-function configKey(){
- return "77config_"+(currentUser?.id||"guest");
-}
-
+function key(){return "77config_"+(user?.id||"guest")}
 function renderSliders(){
  $("sliders").innerHTML=names.map((n,i)=>`
-  <div class="stat">
-   <span>${n}</span>
-   <span class="value" id="v${i}">${values[i]}</span>
-  </div>
-  <input type="range" min="0" max="200" value="${values[i]}" oninput="changeValue(${i},this.value)">
- `).join("");
+  <div class="stat"><span>${n}</span><span id="val${i}" class="points">${values[i]}</span></div>
+  <input type="range" min="0" max="200" value="${values[i]}"
+   oninput="values[${i}]=+this.value;document.getElementById('val${i}').textContent=this.value">`).join("");
 }
-
-function changeValue(i,v){
- values[i]=Number(v);
- $("v"+i).textContent=v;
-}
-
-function loadProfile(){
- const profiles={
-  padrao:defaults,
-  precisao:[85,80,75,65,45,60],
-  rapido:[100,95,90,85,65,85],
-  equilibrado:[90,85,80,75,50,70]
+function loadGameProfile(){
+ let p={
+  padrao:defaults,precisao:[85,80,75,65,45,60],
+  rapido:[100,95,90,85,65,85],equilibrado:[90,85,80,75,50,70]
  };
- values=[...profiles[$("profile").value]];
+ values=[...p[$("profile").value]];
  renderSliders();
 }
-
 function saveConfig(){
- localStorage.setItem(configKey(),JSON.stringify(values));
- $("saved").textContent="✓ Configuração salva neste aparelho!";
+ localStorage.setItem(key(),JSON.stringify(values));
+ $("saved").textContent="Configuração salva neste aparelho!";
 }
-
 function loadSavedConfig(){
- try{
-  const s=JSON.parse(localStorage.getItem(configKey()));
-  if(Array.isArray(s)&&s.length===6)values=s;
- }catch(e){}
+ try{let v=JSON.parse(localStorage.getItem(key()));if(Array.isArray(v)&&v.length===6)values=v}catch(e){}
  renderSliders();
 }
-
 function resetConfig(){
- values=[...defaults];
- $("profile").value="padrao";
- renderSliders();
- saveConfig();
+ values=[...defaults];$("profile").value="padrao";renderSliders();saveConfig();
 }
-
-function copySettings(){
- const t=names.map((n,i)=>n+": "+values[i]).join("\n");
- if(navigator.clipboard?.writeText){
-  navigator.clipboard.writeText(t)
-   .then(()=>alert("Configuração copiada!"))
-   .catch(()=>alert(t));
- }else{
-  alert(t);
- }
-}
-
 function showConfigs(){
- $("configInfo").innerHTML=
- "<br>🎯 Precisão: movimentos controlados."+
- "<br>⚡ Rápido: movimentos ágeis."+
- "<br>⚖️ Equilibrado: referência intermediária."+
- "<br><br>Escolha um perfil acima para experimentar.";
+ $("configInfo").innerHTML="Precisão: movimentos controlados.<br>Rápido: movimentos ágeis.<br>Equilibrado: referência intermediária.";
 }
 
-/* TREINO DE REFLEXO */
-
-let waiting=false,startTime=0,timer=null;
-
+/* TREINOS */
+let waiting=false,started=0,reactTimer=null;
 function reactionGame(){
- const btn=$("reactionBtn");
-
- if(waiting){
-  if(btn.textContent==="TOQUE AGORA!"){
-   const elapsed=Date.now()-startTime;
-   $("reaction").textContent=elapsed+" ms";
-   $("reactionInfo").textContent="Muito bem! Tente novamente.";
-   waiting=false;
-   clearTimeout(timer);
-   btn.textContent="TENTAR NOVAMENTE";
-   btn.style.background="";
-   return;
-  }
-
-  clearTimeout(timer);
-  waiting=false;
-  btn.textContent="COMEÇAR TREINO";
-  btn.style.background="";
-  $("reactionInfo").textContent="Treino cancelado.";
+ let b=$("reactionBtn");
+ if(waiting&&b.textContent==="TOQUE AGORA!"){
+  let ms=Date.now()-started;
+  $("reaction").textContent=ms+" ms";
+  $("reactionInfo").textContent="Muito bem!";
+  waiting=false;clearTimeout(reactTimer);b.textContent="TENTAR NOVAMENTE";b.style.background="";
   return;
  }
-
- waiting=true;
- btn.textContent="ESPERE...";
- btn.style.background="#777";
- $("reactionInfo").textContent="Aguarde o sinal verde!";
-
- timer=setTimeout(()=>{
-  if(!waiting)return;
-  startTime=Date.now();
-  btn.textContent="TOQUE AGORA!";
-  btn.style.background="#16a34a";
+ if(waiting){waiting=false;clearTimeout(reactTimer);b.textContent="COMEÇAR TREINO";b.style.background="";return;}
+ waiting=true;b.textContent="ESPERE...";b.style.background="#777";
+ reactTimer=setTimeout(()=>{
+  if(waiting){started=Date.now();b.textContent="TOQUE AGORA!";b.style.background="#16a34a";}
  },1000+Math.random()*3000);
 }
-
-/* TREINO DE TOQUE */
-
-let count=0,targetTimer=null;
-
+let count=0,targetTimer;
 function startTargets(){
- clearInterval(targetTimer);
- count=0;
- $("score").textContent="0 pontos";
- const area=$("targetArea");
-
- function target(){
+ clearInterval(targetTimer);count=0;$("score").textContent="0 pontos";
+ let area=$("targetArea");
+ function spawn(){
   area.innerHTML="";
-  const t=document.createElement("button");
-  t.textContent="●";
-  t.style.cssText="position:absolute;width:48px;height:48px;border-radius:50%;padding:0;margin:0;background:#f22;font-size:22px";
-  t.style.left=Math.random()*Math.max(0,area.clientWidth-48)+"px";
-  t.style.top=Math.random()*Math.max(0,area.clientHeight-48)+"px";
-
-  t.onclick=()=>{
-   count++;
-   $("score").textContent=count+" pontos";
-   if(count>=20){
-    clearInterval(targetTimer);
-    area.innerHTML="<p style='text-align:center;color:#65df83;padding-top:65px'>TREINO CONCLUÍDO!</p>";
-   }else{
-    target();
-   }
+  let b=document.createElement("button");
+  b.textContent="●";
+  b.style.cssText="position:absolute;width:48px;height:48px;padding:0;margin:0;border-radius:50%";
+  b.style.left=Math.random()*Math.max(0,area.clientWidth-48)+"px";
+  b.style.top=Math.random()*Math.max(0,area.clientHeight-48)+"px";
+  b.onclick=()=>{
+   count++;$("score").textContent=count+" pontos";
+   if(count>=20){clearInterval(targetTimer);area.textContent="TREINO CONCLUÍDO!";}
+   else spawn();
   };
-  area.appendChild(t);
+  area.appendChild(b);
  }
-
- target();
- targetTimer=setInterval(()=>{if(count<20)target()},1200);
+ spawn();
+ targetTimer=setInterval(()=>{if(count<20)spawn()},1200);
 }
 
-client.auth.onAuthStateChange((_event,session)=>{
- if(session&&!currentUser){
-  setTimeout(()=>startSession(session.user),0);
- }
+db.auth.onAuthStateChange((event,session)=>{
+ if(session&&!user)setTimeout(()=>startSession(session.user),0);
 });
 </script>
 
 <script>
-if("serviceWorker" in navigator){
+if("serviceWorker"in navigator){
  window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("./sw.js")
-   .then(()=>console.log("77 XIT FF: aplicativo atualizado"))
-   .catch(error=>console.error("Erro no aplicativo:",error));
+  navigator.serviceWorker.register("./sw.js").catch(console.error);
  });
 }
 </script>
-
 </body>
 </html>
