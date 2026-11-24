@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>77 XIT FF - Estatísticas</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#080808;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding:18px;
+}
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:22px;
+}
+.logo{
+ font-size:25px;
+ font-weight:900;
+ color:#39e75f;
+}
+.version{color:#888;font-size:12px}
+h2{font-size:22px;margin-bottom:5px}
+.sub{color:#999;font-size:13px;margin-bottom:22px}
+.card{
+ background:#151515;
+ border:1px solid #292929;
+ border-radius:15px;
+ padding:17px;
+ margin-bottom:14px;
+}
+.card h3{margin:0 0 15px;font-size:15px}
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+.stat{
+ background:#202020;
+ padding:15px 10px;
+ border-radius:12px;
+ text-align:center;
+}
+.stat strong{
+ display:block;
+ font-size:25px;
+ color:#39e75f;
+ margin-bottom:5px;
+}
+.stat span{font-size:11px;color:#aaa}
+label{
+ display:block;
+ color:#bbb;
+ font-size:12px;
+ margin:12px 0 6px;
+}
+input{
+ width:100%;
+ padding:13px;
+ border-radius:9px;
+ border:1px solid #333;
+ background:#090909;
+ color:white;
+ font-size:16px;
+}
+button{
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:10px;
+ background:#39e75f;
+ color:#061008;
+ font-weight:bold;
+ font-size:14px;
+ margin-top:12px;
+}
+.secondary{
+ background:#292929;
+ color:white;
+}
+.green{color:#39e75f}
+footer{
+ text-align:center;
+ color:#666;
+ font-size:11px;
+ margin:25px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">77 XIT FF</div>
+ <div class="version">CENTRAL 9.0</div>
+</header>
+
+<h2>Meu desempenho</h2>
+<p class="sub">Acompanhe sua evolução no Free Fire.</p>
+
+<div class="grid">
+ <div class="stat">
+  <strong id="kdView">0.00</strong>
+  <span>K/D</span>
+ </div>
+ <div class="stat">
+  <strong id="winView">0%</strong>
+  <span>Taxa de vitória</span>
+ </div>
+ <div class="stat">
+  <strong id="killsView">0</strong>
+  <span>Abates</span>
+ </div>
+ <div class="stat">
+  <strong id="gamesView">0</strong>
+  <span>Partidas</span>
+ </div>
+</div>
+
+<div class="card" style="margin-top:15px">
+ <h3>📊 Atualizar estatísticas</h3>
+
+ <label>Total de partidas</label>
+ <input id="games" type="number" min="0" placeholder="Ex: 100">
+
+ <label>Vitórias</label>
+ <input id="wins" type="number" min="0" placeholder="Ex: 40">
+
+ <label>Total de abates</label>
+ <input id="kills" type="number" min="0" placeholder="Ex: 250">
+
+ <label>Total de mortes</label>
+ <input id="deaths" type="number" min="0" placeholder="Ex: 100">
+
+ <button onclick="saveStats()">SALVAR ESTATÍSTICAS</button>
+</div>
+
+<div class="card">
+ <h3>⚡ Treinamento</h3>
+
+ <label>Melhor tempo de reflexo (ms)</label>
+ <input id="reflex" type="number" min="0" placeholder="Ex: 250">
+
+ <label>Pontuação do treino de toque</label>
+ <input id="touch" type="number" min="0" placeholder="Ex: 85">
+
+ <button onclick="saveTraining()">SALVAR TREINAMENTO</button>
+</div>
+
+<div class="card">
+ <h3>🏆 Minhas conquistas</h3>
+ <div id="achievements" class="sub">
+  Continue jogando e registre seus resultados!
+ </div>
+</div>
+
+<div class="card">
+ <h3>📈 Resumo do jogador</h3>
+ <p>Melhor reflexo: <b class="green" id="reflexView">0 ms</b></p>
+ <p>Pontuação de toque: <b class="green" id="touchView">0</b></p>
+ <p>Última atualização: <b id="updatedView">Ainda não atualizado</b></p>
+</div>
+
+<button class="secondary" onclick="location.href='./index.html'">
+ VOLTAR AO MENU PRINCIPAL
+</button>
+
+<footer>
+77 XIT FF • CENTRAL DE DESEMPENHO 9.0
+<br>Estatísticas registradas neste dispositivo.
+</footer>
+
+<script>
+const KEY = "77_xit_estatisticas_90";
+
+function loadData(){
+ try{
+  return JSON.parse(localStorage.getItem(KEY)) || {};
+ }catch(e){
+  return {};
+ }
+}
+
+function render(){
+ const d = loadData();
+
+ const games = Number(d.games) || 0;
+ const wins = Number(d.wins) || 0;
+ const kills = Number(d.kills) || 0;
+ const deaths = Number(d.deaths) || 0;
+
+ const kd = deaths > 0 ? kills/deaths : kills;
+ const winRate = games > 0 ? wins/games*100 : 0;
+
+ document.getElementById("games").value = games;
+ document.getElementById("wins").value = wins;
+ document.getElementById("kills").value = kills;
+ document.getElementById("deaths").value = deaths;
+
+ document.getElementById("reflex").value = d.reflex || "";
+ document.getElementById("touch").value = d.touch || "";
+
+ document.getElementById("kdView").textContent = kd.toFixed(2);
+ document.getElementById("winView").textContent = winRate.toFixed(1)+"%";
+ document.getElementById("killsView").textContent = kills;
+ document.getElementById("gamesView").textContent = games;
+
+ document.getElementById("reflexView").textContent =
+  (d.reflex || 0)+" ms";
+
+ document.getElementById("touchView").textContent =
+  d.touch || 0;
+
+ document.getElementById("updatedView").textContent =
+  d.updated || "Ainda não atualizado";
+
+ let achievements = [];
+
+ if(games >= 1) achievements.push("🎮 Primeira partida registrada");
+ if(games >= 10) achievements.push("🔥 10 partidas registradas");
+ if(wins >= 10) achievements.push("🏆 10 vitórias");
+ if(kills >= 100) achievements.push("💥 100 abates");
+ if(kd >= 2 && games > 0) achievements.push("⭐ K/D acima de 2.0");
+ if(Number(d.touch) >= 80) achievements.push("⚡ Treino de toque acima de 80");
+
+ document.getElementById("achievements").innerHTML =
+  achievements.length
+  ? achievements.map(x=>"<p>"+x+"</p>").join("")
+  : "Nenhuma conquista desbloqueada ainda.";
+}
+
+function saveStats(){
+ const games = Number(document.getElementById("games").value);
+ const wins = Number(document.getElementById("wins").value);
+ const kills = Number(document.getElementById("kills").value);
+ const deaths = Number(document.getElementById("deaths").value);
+
+ if([games,wins,kills,deaths].some(n=>!Number.isInteger(n)||n<0)){
+  alert("Preencha todos os campos com números inteiros válidos.");
+  return;
+ }
+
+ if(wins > games){
+  alert("O número de vitórias não pode ser maior que o de partidas.");
+  return;
+ }
+
+ const d = loadData();
+ Object.assign(d,{
+  games,wins,kills,deaths,
+  updated:new Date().toLocaleString("pt-BR")
+ });
+
+ localStorage.setItem(KEY,JSON.stringify(d));
+ render();
+ alert("Estatísticas salvas!");
+}
+
+function saveTraining(){
+ const reflex = Number(document.getElementById("reflex").value);
+ const touch = Number(document.getElementById("touch").value);
+
+ if(!Number.isFinite(reflex)||!Number.isFinite(touch)||reflex<0||touch<0){
+  alert("Digite valores válidos.");
+  return;
+ }
+
+ const d = loadData();
+ d.reflex = reflex;
+ d.touch = touch;
+ d.updated = new Date().toLocaleString("pt-BR");
+
+ localStorage.setItem(KEY,JSON.stringify(d));
+ render();
+ alert("Treinamento salvo!");
+}
+
+render();
+</script>
+
+</body>
+</html>
