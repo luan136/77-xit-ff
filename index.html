@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>77 XIT FF 9.0</title>
+<title>77 XIT FF 10.0</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -53,6 +53,25 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
 .good{color:#75df91}
 .customer{border-bottom:1px solid #333;padding:10px 0;font-size:12px;overflow-wrap:anywhere}
 .pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#333;color:#ddd;margin:3px}
+
+/* PERFIL 77 XIT */
+.profileTop{text-align:center}
+.avatar{
+ width:112px;height:112px;border-radius:50%;
+ border:3px solid #f33;object-fit:cover;
+ background:#222;display:block;margin:0 auto 12px;
+}
+.profileName{font-size:21px;font-weight:bold;margin:8px 0}
+.profileId{font-size:11px;color:#aaa;overflow-wrap:anywhere}
+.profileInfo{
+ background:#202020;border-radius:9px;padding:12px;
+ margin:9px 0;font-size:12px;overflow-wrap:anywhere;
+}
+.profileInfo span{color:#999;display:block;margin-bottom:5px}
+.profileInfo strong{color:#fff}
+.profileButtons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.profileButtons button{font-size:12px}
+#profileMessage{font-size:12px;text-align:center;min-height:18px;color:#75df91}
 </style>
 </head>
 
@@ -65,7 +84,7 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
   <div class="sub">FREE FIRE EXPERIENCE</div>
   <p class="small">PREPARE-SE PARA JOGAR</p>
   <button class="enter" onclick="enterSite()">▶ ENTRAR NO PAINEL</button>
-  <p class="small">VERSION 9.0 ONLINE</p>
+  <p class="small">VERSION 10.0 ONLINE</p>
  </div>
 </div>
 
@@ -118,11 +137,54 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
 <section id="app">
 <header>
  <div class="logo">77 XIT FF</div>
- <p class="small">PAINEL AUXILIAR • VERSION 9.0 ONLINE</p>
+ <p class="small">PAINEL AUXILIAR • VERSION 10.0 ONLINE</p>
  <p id="welcome" class="small"></p>
 </header>
 
 <main>
+
+ <section class="card" id="playerProfile">
+  <h2>👤 MEU PERFIL</h2>
+  <div class="profileTop">
+   <img id="profileAvatar" class="avatar" alt="Foto do jogador">
+   <div class="profileName" id="profileDisplayName">Jogador 77</div>
+   <div class="profileId" id="profileDisplayId"></div>
+  </div>
+
+  <label for="profileNameInput">Nome do jogador</label>
+  <input id="profileNameInput" maxlength="24" placeholder="Seu nome de jogador">
+
+  <label for="profilePhotoInput">Escolher foto de perfil</label>
+  <input id="profilePhotoInput" type="file" accept="image/jpeg,image/png,image/webp">
+
+  <div class="profileInfo">
+   <span>E-mail da conta</span>
+   <strong id="profileEmail">Carregando...</strong>
+  </div>
+
+  <div class="profileInfo">
+   <span>ID exclusivo da conta</span>
+   <strong id="profileId">Carregando...</strong>
+  </div>
+
+  <div class="profileInfo">
+   <span>Data de cadastro</span>
+   <strong id="profileCreated">Carregando...</strong>
+  </div>
+
+  <div class="profileInfo">
+   <span>Situação do acesso</span>
+   <strong id="profileAccess">Verificando...</strong>
+  </div>
+
+  <div class="profileInfo">
+   <span>Vencimento do acesso</span>
+   <strong id="profileExpiry">Não disponível</strong>
+  </div>
+
+  <button onclick="savePlayerProfile()">SALVAR MEU PERFIL</button>
+  <p id="profileMessage"></p>
+ </section>
 
  <section class="card">
   <h2>📊 ESTATÍSTICAS 9.0</h2>
@@ -208,7 +270,7 @@ footer{text-align:center;color:#666;font-size:11px;padding:20px}
 
 </main>
 
-<footer>77 XIT FF 9.0 • PAINEL AUXILIAR • Não modifica o Free Fire</footer>
+<footer>77 XIT FF 10.0 • PAINEL AUXILIAR • Não modifica o Free Fire</footer>
 </section>
 
 <script>
@@ -218,6 +280,7 @@ const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 const $=id=>document.getElementById(id);
 let currentUser=null,isAdmin=false,hasAccess=false;
+let currentProfilePhoto=null;
 
 function showLogin(){
  $("registerBox").style.display="none";
@@ -319,7 +382,7 @@ async function startSession(user){
 
  $("progress").style.width="100%";
 
- setTimeout(()=>{
+ setTimeout(async()=>{
   $("loading").style.display="none";
 
   const username=user.user_metadata?.username||user.email.split("@")[0];
@@ -343,10 +406,173 @@ async function startSession(user){
   $("redeemInline").style.display="none";
 
   loadSavedConfig();
+  await loadPlayerProfile();
   if(isAdmin)loadCustomers();
 
  },350);
 }
+
+/* PERFIL DO JOGADOR */
+
+function defaultAvatar(){
+ return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="100%" height="100%" fill="#222"/><circle cx="100" cy="75" r="38" fill="#777"/><path d="M25 200c5-55 35-75 75-75s70 20 75 75" fill="#777"/></svg>'
+ );
+}
+
+async function loadPlayerProfile(){
+ if(!currentUser)return;
+
+ $("profileEmail").textContent=currentUser.email||"Não disponível";
+ $("profileId").textContent=currentUser.id;
+ $("profileDisplayId").textContent="ID: "+currentUser.id;
+ $("profileCreated").textContent=currentUser.created_at
+  ?new Date(currentUser.created_at).toLocaleDateString("pt-BR")
+  :"Não disponível";
+
+ $("profileAccess").textContent=hasAccess||isAdmin?"Ativo":"Sem acesso";
+ $("profileExpiry").textContent="Consulte a área de acesso";
+
+ $("profileAvatar").src=defaultAvatar();
+
+ const metadataName=currentUser.user_metadata?.username||"Jogador 77";
+ $("profileNameInput").value=metadataName;
+ $("profileDisplayName").textContent=metadataName;
+
+ const {data,error}=await client
+  .from("perfis_jogadores")
+  .select("nome_jogador,foto_url")
+  .eq("user_id",currentUser.id)
+  .maybeSingle();
+
+ if(error){
+  $("profileMessage").textContent="Não foi possível carregar o perfil: "+error.message;
+  return;
+ }
+
+ if(data){
+  $("profileNameInput").value=data.nome_jogador||metadataName;
+  $("profileDisplayName").textContent=data.nome_jogador||metadataName;
+  if(data.foto_url){
+   currentProfilePhoto=data.foto_url;
+   $("profileAvatar").src=data.foto_url;
+  }
+ }
+
+ // Consulta a validade somente se as permissões da tabela permitirem.
+ const {data:accessInfo,error:accessInfoError}=await client
+  .from("user_access")
+  .select("active,expires_at")
+  .eq("user_id",currentUser.id)
+  .maybeSingle();
+
+ if(!accessInfoError&&accessInfo){
+  $("profileAccess").textContent=accessInfo.active?"Ativo":"Inativo";
+  $("profileExpiry").textContent=accessInfo.expires_at
+   ?new Date(accessInfo.expires_at).toLocaleString("pt-BR")
+   :"Sem data registrada";
+ }
+}
+
+async function savePlayerProfile(){
+ if(!currentUser){
+  alert("Entre na sua conta primeiro.");
+  return;
+ }
+
+ const name=$("profileNameInput").value.trim();
+
+ if(name.length<3||name.length>24){
+  $("profileMessage").textContent="O nome precisa ter entre 3 e 24 caracteres.";
+  return;
+ }
+
+ $("profileMessage").textContent="Salvando perfil...";
+
+ let photoUrl=currentProfilePhoto;
+
+ const file=$("profilePhotoInput").files[0];
+
+ if(file){
+  const allowed=["image/jpeg","image/png","image/webp"];
+
+  if(!allowed.includes(file.type)){
+   $("profileMessage").textContent="Escolha uma imagem JPG, PNG ou WEBP.";
+   return;
+  }
+
+  if(file.size>2*1024*1024){
+   $("profileMessage").textContent="A foto deve ter no máximo 2 MB.";
+   return;
+  }
+
+  const extension=file.type==="image/png"?"png":
+   file.type==="image/webp"?"webp":"jpg";
+
+  const path=currentUser.id+"/"+Date.now()+"."+extension;
+
+  const {error:uploadError}=await client.storage
+   .from("fotos-perfis")
+   .upload(path,file,{upsert:true,contentType:file.type});
+
+  if(uploadError){
+   $("profileMessage").textContent="Erro ao enviar foto: "+uploadError.message;
+   return;
+  }
+
+  const {data:publicData}=client.storage
+   .from("fotos-perfis")
+   .getPublicUrl(path);
+
+  photoUrl=publicData.publicUrl;
+ }
+
+ const {error:profileError}=await client
+  .from("perfis_jogadores")
+  .upsert({
+   user_id:currentUser.id,
+   nome_jogador:name,
+   foto_url:photoUrl,
+   updated_at:new Date().toISOString()
+  },{onConflict:"user_id"});
+
+ if(profileError){
+  $("profileMessage").textContent="Erro ao salvar perfil: "+profileError.message;
+  return;
+ }
+
+ const {data:updatedUser,error:metadataError}=await client.auth.updateUser({
+  data:{username:name}
+ });
+
+ if(!metadataError&&updatedUser?.user){
+  currentUser=updatedUser.user;
+ }
+
+ currentProfilePhoto=photoUrl;
+ $("profileDisplayName").textContent=name;
+ $("profileAvatar").src=photoUrl||defaultAvatar();
+ $("welcome").textContent="BEM-VINDO, "+name.toUpperCase();
+ $("profileMessage").textContent="✓ Perfil salvo com sucesso!";
+ $("profilePhotoInput").value="";
+}
+
+$("profilePhotoInput").addEventListener("change",()=>{
+ const file=$("profilePhotoInput").files[0];
+ if(!file)return;
+
+ if(file.size>2*1024*1024){
+  $("profileMessage").textContent="A foto deve ter no máximo 2 MB.";
+  $("profilePhotoInput").value="";
+  return;
+ }
+
+ const reader=new FileReader();
+ reader.onload=()=>{$("profileAvatar").src=reader.result};
+ reader.readAsDataURL(file);
+});
+
+/* CÓDIGOS DE ACESSO */
 
 async function redeemCode(){
  const code=$("accessCode").value.trim();
@@ -402,6 +628,7 @@ async function logout(){
  currentUser=null;
  isAdmin=false;
  hasAccess=false;
+ currentProfilePhoto=null;
 
  $("app").style.display="none";
  $("loading").style.display="none";
@@ -467,6 +694,8 @@ function escapeHtml(v){
   "'":"&#39;"
  }[c]));
 }
+
+/* SENSIBILIDADE */
 
 const names=["Geral","Ponto vermelho","Mira 2x","Mira 4x","Mira AWM","Olhadinha"];
 const defaults=[90,85,80,75,50,70];
@@ -544,6 +773,8 @@ function showConfigs(){
  "<br><br>Escolha um perfil acima para experimentar.";
 }
 
+/* TREINO DE REFLEXO */
+
 let waiting=false,startTime=0,timer=null;
 
 function reactionGame(){
@@ -581,6 +812,8 @@ function reactionGame(){
   btn.style.background="#16a34a";
  },1000+Math.random()*3000);
 }
+
+/* TREINO DE TOQUE */
 
 let count=0,targetTimer=null;
 
